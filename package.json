@@ -1,0 +1,15 @@
+{
+  "name": "crypto-mlops-mvp",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "flow:init": "npx claude-flow init",
+    "flow:hive": "npx claude-flow hive init --topology mesh --agents 3",
+    "flow:report": "npx claude-flow orchestrate \"Read logs from logs.txt and metrics from metrics.json. Produce a concise Markdown daily MLOps report with sections: Services health, Airflow DAGs (last run & status), MLflow runs, MinIO artifacts, and a prioritized TODO for next 24h.\" --agents 3 --parallel > report.md",
+    "flow:prqa": "git diff --staged > pr.diff && npx claude-flow orchestrate \"Review pr.diff for code quality, security basics, latency risks, missing tests/docs. Return a checklist ordered by impact and short fixes.\" --agents 3 --parallel > pr_qa.md",
+    "flow:docsync": "npx claude-flow orchestrate \"Read README.md and docs/openapi-signal.yaml. Harmonize endpoints, examples and env vars. Output README_SYNC.md with an endpoints table and clear setup steps.\" --agents 3 --parallel > README_SYNC.md"
+  },
+  "devDependencies": {
+    "claude-flow": "^2.0.0-alpha.90"
+  }
+}

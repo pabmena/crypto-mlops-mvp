@@ -1,0 +1,26 @@
+{
+  "scripts": {
+    "flow:init": "npx claude-flow init",
+    "flow:hive": "npx claude-flow hive init --topology mesh --agents 3",
+    "flow:report": "npx claude-flow orchestrate \"create a crypto daily report from logs.txt and metrics.json\" --agents 3 --parallel"
+  },
+  "devDependencies": {
+    "claude-flow": "alpha"
+  }
+}
+{
+  "name": "crypto-mlops-mvp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "claude-flow": "^2.0.0-alpha.90"
+  }
+}

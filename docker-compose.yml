@@ -1,0 +1,10 @@
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "${API_PORT:-8800}:8800"
+    environment:
+      - ENV=${ENV:-dev}
+    restart: unless-stopped

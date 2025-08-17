@@ -1,0 +1,2 @@
+﻿fastapi | INFO: Uvicorn running :8800
+mlflow | INFO: Serving :5001
