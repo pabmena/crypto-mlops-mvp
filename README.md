@@ -437,9 +437,6 @@ docker compose build --no-cache api
 ```
 
 ---
-
-## 🔧 Troubleshooting
-
 ### 1️⃣ `NameError: name 'pathlib' is not defined`
 
 **✅ Solucionado** unificando a:
@@ -491,13 +488,10 @@ docker compose up -d --build
 
 ---
 
-## 🗺️ Roadmap
+## 🗺️ Roadmap futuro
 
 ### 🚀 Prioridad 1
 
-- ✅ OHLCV real con ccxt
-- ✅ Persistencia JSONL
-- ✅ Tests básicos
 - 🔄 **Batch:** `POST /v1/crypto/signal/batch` (múltiples símbolos/timeframes)
 - 🔄 **Persistir métricas** en SQLite (`./data`)
 
@@ -599,11 +593,7 @@ Get-Content .\data\signals.jsonl -Tail 5
 
 **🚀 ¡Listo para ser usado!**
 
-[![⭐ Star this repo](https://img.shields.io/github/stars/tu-usuario/crypto-mlops-mvp?style=social)](https://github.com/tu-usuario/crypto-mlops-mvp)
+[![⭐ Star this repo](https://img.shields.io/github/stars/tu-usuario/crypto-mlops-mvp?style=social)](https://github.com/pabmena/crypto-mlops-mvp)
 
 </div>
-**🚀 ¡Listo para ser usado!**
 
-[![⭐ Star this repo](https://img.shields.io/github/stars/tu-usuario/crypto-mlops-mvp?style=social)](https://github.com/tu-usuario/crypto-mlops-mvp)
-
-</div>
