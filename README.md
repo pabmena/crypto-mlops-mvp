@@ -7,6 +7,19 @@
 [![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=flat&logo=python&logoColor=white)](https://python.org)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+## 📚 Información Académica
+
+**🎓 Trabajo Final** de la materia **Operaciones de Aprendizaje de Máquina 2**  
+**🏛️ Curso de Especialización en Inteligencia Artificial**
+
+### 👨‍🎓 Alumnos:
+- **Pablo Ariel Menardi** - `a1814`
+- **Ezequiel Alejandro Caamaño** - `a1802`
+
+---
+
+## 🎯 Proyecto
+
 **Objetivo:** Exponer señales simples de riesgo y volatilidad para cripto (hoy: BTC/USDT) a través de una API FastAPI corriendo en Docker, con persistencia local y utilidades básicas de operación (métricas, reporte diario y una UI mínima).
 
 **Enfoque:** **MVP** - Todo en local, sin nubes ni servicios pagos.
