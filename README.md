@@ -1,4 +1,4 @@
-﻿# 🚀 Crypto MLOps MVP
+# 🚀 Crypto MLOps MVP
 
 > **Infra mínima viva para señales de riesgo y volatilidad cripto**
 
@@ -597,6 +597,11 @@ Get-Content .\data\signals.jsonl -Tail 5
 
 <div align="center">
 
+**🚀 ¡Listo para ser usado!**
+
+[![⭐ Star this repo](https://img.shields.io/github/stars/tu-usuario/crypto-mlops-mvp?style=social)](https://github.com/tu-usuario/crypto-mlops-mvp)
+
+</div>
 **🚀 ¡Listo para ser usado!**
 
 [![⭐ Star this repo](https://img.shields.io/github/stars/tu-usuario/crypto-mlops-mvp?style=social)](https://github.com/tu-usuario/crypto-mlops-mvp)
