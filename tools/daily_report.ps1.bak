@@ -1,0 +1,37 @@
+﻿$ErrorActionPreference = "Stop"
+
+$base = "http://localhost:8800"
+$ts   = (Get-Date).ToUniversalTime().ToString("yyyy-MM-dd HH:mm 'UTC'")
+
+# 1) Métricas
+$m = Invoke-RestMethod -Uri "$base/metrics" -Method GET
+
+# 2) Señal (stub)
+$body = @{ symbol = "BTCUSDT"; horizon_min = 60; explain = $false } | ConvertTo-Json
+$s = Invoke-RestMethod -Uri "$base/v1/crypto/signal" -Method POST -ContentType "application/json" -Body $body
+
+# 3) Armar markdown (sin here-strings)
+$sJson = $s | ConvertTo-Json -Depth 10
+
+$lines = @()
+$lines += "# Daily MLOps Report — $ts"
+$lines += ""
+$lines += "## Services health"
+$lines += "- API: **reachable**"
+$lines += "- Requests total: **$($m.requests_total)**"
+$lines += "- Signals total: **$($m.signals_total)**"
+$lines += "- Last signal at: **$($m.last_signal_at)**"
+$lines += "- Uptime since: **$($m.start_time)**"
+$lines += ""
+$lines += "## Latest Signal"
+$lines += "```json"
+$lines += $sJson
+$lines += "```"
+$lines += ""
+$lines += "## TODO (next 24h)"
+$lines += "- Conectar datasource real (Binance/Kraken)."
+$lines += "- Persistir métricas (archivo/DB)."
+$lines += "- Agregar tests unitarios básicos."
+
+$lines -join "`r`n" | Set-Content -Path ".\report.md" -Encoding utf8
+Write-Host "✓ report.md generado" -ForegroundColor Green
