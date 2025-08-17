@@ -8,3 +8,6 @@ services:
     environment:
       - ENV=${ENV:-dev}
     restart: unless-stopped
+    volumes:
+      - ./api:/app
+      - ./data:/app/data
