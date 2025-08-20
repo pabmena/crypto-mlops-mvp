@@ -1,0 +1,187 @@
+syntax = "proto3";
+
+package crypto;
+
+// Servicio principal de crypto data y predicciones
+service CryptoService {
+    // Obtener datos OHLCV
+    rpc GetOHLCV(OHLCVRequest) returns (OHLCVResponse);
+    
+    // Generar señal heurística
+    rpc GenerateSignal(SignalRequest) returns (SignalResponse);
+    
+    // Generar predicción ML
+    rpc GenerateMLPrediction(MLPredictionRequest) returns (MLPredictionResponse);
+    
+    // Comparar métodos
+    rpc CompareSignals(CompareSignalsRequest) returns (CompareSignalsResponse);
+    
+    // Health check
+    rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse);
+    
+    // Stream de precios en tiempo real
+    rpc StreamPrices(StreamRequest) returns (stream PriceUpdate);
+}
+
+// === MENSAJES DE REQUEST ===
+message OHLCVRequest {
+    string symbol = 1;
+    string exchange = 2;
+    string timeframe = 3;
+    int32 limit = 4;
+}
+
+message SignalRequest {
+    string symbol = 1;
+    int32 horizon_min = 2;
+    bool explain = 3;
+    string exchange = 4;
+    string timeframe = 5;
+    int32 limit = 6;
+}
+
+message MLPredictionRequest {
+    string symbol = 1;
+    string exchange = 2;
+    string timeframe = 3;
+    int32 limit = 4;
+    bool include_heuristic = 5;
+}
+
+message CompareSignalsRequest {
+    string symbol = 1;
+    string exchange = 2;
+    string timeframe = 3;
+    int32 limit = 4;
+}
+
+message HealthCheckRequest {}
+
+message StreamRequest {
+    repeated string symbols = 1;
+    int32 update_interval_ms = 2;
+}
+
+// === MENSAJES DE RESPONSE ===
+message OHLCVResponse {
+    string symbol = 1;
+    string exchange = 2;
+    string timeframe = 3;
+    int32 rows = 4;
+    repeated OHLCVData data = 5;
+    string error = 6;
+}
+
+message OHLCVData {
+    int64 timestamp = 1;
+    double open = 2;
+    double high = 3;
+    double low = 4;
+    double close = 5;
+    double volume = 6;
+}
+
+message SignalResponse {
+    string symbol = 1;
+    int32 horizon_min = 2;
+    double risk_score = 3;
+    double nowcast_ret = 4;
+    string vol_regime = 5;
+    string timestamp = 6;
+    string method = 7;
+    SignalExplanation explanation = 8;
+    string error = 9;
+}
+
+message SignalExplanation {
+    double nowcast_ret = 1;
+    double vol = 2;
+    string vol_regime = 3;
+    double risk_score = 4;
+    repeated FeatureData features_tail = 5;
+}
+
+message FeatureData {
+    string time = 1;
+    double close = 2;
+    double ret = 3;
+    double vol24 = 4;
+    double sma12 = 5;
+    double sma48 = 6;
+}
+
+message MLPredictionResponse {
+    string symbol = 1;
+    string timestamp = 2;
+    string method = 3;
+    string model_version = 4;
+    MLPrediction ml_prediction = 5;
+    HeuristicComparison heuristic_comparison = 6;
+    string error = 7;
+}
+
+message MLPrediction {
+    double prediction = 1;
+    double current_volatility = 2;
+    string volatility_regime = 3;
+    string risk_level = 4;
+    double confidence = 5;
+    string prediction_timestamp = 6;
+    string error = 7;
+}
+
+message HeuristicComparison {
+    double heuristic_risk_score = 1;
+    string heuristic_vol_regime = 2;
+    MLVsHeuristic ml_vs_heuristic = 3;
+}
+
+message MLVsHeuristic {
+    double volatility_diff = 1;
+    bool regime_match = 2;
+}
+
+message CompareSignalsResponse {
+    string symbol = 1;
+    string timestamp = 2;
+    HeuristicSignal heuristic = 3;
+    MLSignal ml = 4;
+    SignalComparison comparison = 5;
+    string error = 6;
+}
+
+message HeuristicSignal {
+    double risk_score = 1;
+    string vol_regime = 2;
+    double volatility = 3;
+}
+
+message MLSignal {
+    double predicted_volatility = 1;
+    string vol_regime = 2;
+    double confidence = 3;
+    string risk_level = 4;
+}
+
+message SignalComparison {
+    double volatility_diff = 1;
+    bool regime_agreement = 2;
+    double ml_confidence = 3;
+}
+
+message HealthCheckResponse {
+    string status = 1;
+    bool ml_available = 2;
+    string timestamp = 3;
+    string version = 4;
+}
+
+message PriceUpdate {
+    string symbol = 1;
+    double price = 2;
+    double change_24h = 3;
+    double volume_24h = 4;
+    int64 timestamp = 5;
+    double volatility = 6;
+    string regime = 7;
+}

@@ -1,0 +1,868 @@
+[2025-08-20T21:01:10.373+0000] {processor.py:157} INFO - Started process (PID=171) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:01:10.373+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:01:10.375+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:01:10.375+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:01:10.386+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:01:10.385+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:01:10.386+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:01:10.395+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.024 seconds
+[2025-08-20T21:01:40.578+0000] {processor.py:157} INFO - Started process (PID=176) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:01:40.579+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:01:40.579+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:01:40.579+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:01:40.583+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:01:40.582+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:01:40.583+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:01:40.593+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.017 seconds
+[2025-08-20T21:02:10.894+0000] {processor.py:157} INFO - Started process (PID=181) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:02:10.895+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:02:10.895+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:02:10.895+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:02:10.897+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:02:10.897+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:02:10.897+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:02:10.905+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.012 seconds
+[2025-08-20T21:02:41.108+0000] {processor.py:157} INFO - Started process (PID=186) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:02:41.109+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:02:41.109+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:02:41.109+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:02:41.112+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:02:41.111+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:02:41.112+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:02:41.123+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.017 seconds
+[2025-08-20T21:03:11.320+0000] {processor.py:157} INFO - Started process (PID=191) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:03:11.321+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:03:11.321+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:03:11.321+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:03:11.324+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:03:11.323+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:03:11.324+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:03:11.334+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.015 seconds
+[2025-08-20T21:03:41.590+0000] {processor.py:157} INFO - Started process (PID=196) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:03:41.590+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:03:41.591+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:03:41.591+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:03:41.595+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:03:41.594+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:03:41.595+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:03:41.606+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.019 seconds
+[2025-08-20T21:04:11.852+0000] {processor.py:157} INFO - Started process (PID=201) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:04:11.853+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:04:11.853+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:04:11.853+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:04:11.856+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:04:11.856+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:04:11.857+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:04:11.867+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.017 seconds
+[2025-08-20T21:04:42.111+0000] {processor.py:157} INFO - Started process (PID=206) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:04:42.112+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:04:42.112+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:04:42.112+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:04:42.116+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:04:42.115+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:04:42.116+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:04:42.126+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.017 seconds
+[2025-08-20T21:05:12.381+0000] {processor.py:157} INFO - Started process (PID=211) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:05:12.381+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:05:12.382+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:05:12.382+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:05:12.384+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:05:12.384+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:05:12.385+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:05:12.394+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.015 seconds
+[2025-08-20T21:05:42.644+0000] {processor.py:157} INFO - Started process (PID=216) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:05:42.645+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:05:42.646+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:05:42.645+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:05:42.649+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:05:42.648+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:05:42.650+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:05:42.660+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.018 seconds
+[2025-08-20T21:06:12.947+0000] {processor.py:157} INFO - Started process (PID=221) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:06:12.947+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:06:12.948+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:06:12.948+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:06:12.952+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:06:12.951+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:06:12.953+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:06:12.963+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.019 seconds
+[2025-08-20T21:06:43.208+0000] {processor.py:157} INFO - Started process (PID=226) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:06:43.209+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:06:43.209+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:06:43.209+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:06:43.213+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:06:43.212+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:06:43.213+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:06:43.224+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.018 seconds
+[2025-08-20T21:07:13.469+0000] {processor.py:157} INFO - Started process (PID=231) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:07:13.469+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:07:13.470+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:07:13.470+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:07:13.474+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:07:13.473+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:07:13.474+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:07:13.486+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.019 seconds
+[2025-08-20T21:07:43.710+0000] {processor.py:157} INFO - Started process (PID=236) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:07:43.711+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:07:43.711+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:07:43.711+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:07:43.714+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:07:43.713+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:07:43.714+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:07:43.724+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.016 seconds
+[2025-08-20T21:08:13.968+0000] {processor.py:157} INFO - Started process (PID=241) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:08:13.968+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:08:13.969+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:08:13.968+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:08:13.972+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:08:13.971+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:08:13.972+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:08:13.982+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.016 seconds
+[2025-08-20T21:08:44.229+0000] {processor.py:157} INFO - Started process (PID=246) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:08:44.230+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:08:44.230+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:08:44.230+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:08:44.234+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:08:44.233+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:08:44.234+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:08:44.245+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.018 seconds
+[2025-08-20T21:09:14.479+0000] {processor.py:157} INFO - Started process (PID=251) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:09:14.479+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:09:14.480+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:09:14.480+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:09:14.483+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:09:14.482+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:09:14.484+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:09:14.494+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.017 seconds
+[2025-08-20T21:09:44.740+0000] {processor.py:157} INFO - Started process (PID=256) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:09:44.741+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:09:44.741+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:09:44.741+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:09:44.745+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:09:44.744+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:09:44.745+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:09:44.755+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.017 seconds
+[2025-08-20T21:10:15.018+0000] {processor.py:157} INFO - Started process (PID=261) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:10:15.018+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:10:15.019+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:10:15.019+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:10:15.023+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:10:15.022+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:10:15.023+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:10:15.034+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.018 seconds
+[2025-08-20T21:10:45.309+0000] {processor.py:157} INFO - Started process (PID=266) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:10:45.309+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:10:45.310+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:10:45.310+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:10:45.313+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:10:45.312+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:10:45.313+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:10:45.324+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.017 seconds
+[2025-08-20T21:11:15.622+0000] {processor.py:157} INFO - Started process (PID=271) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:11:15.622+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:11:15.623+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:11:15.623+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:11:15.626+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:11:15.625+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:11:15.626+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:11:15.635+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.015 seconds
+[2025-08-20T21:11:45.889+0000] {processor.py:157} INFO - Started process (PID=276) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:11:45.889+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:11:45.890+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:11:45.890+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:11:45.894+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:11:45.893+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:11:45.894+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:11:45.905+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.018 seconds
+[2025-08-20T21:12:16.142+0000] {processor.py:157} INFO - Started process (PID=281) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:12:16.142+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:12:16.143+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:12:16.143+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:12:16.146+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:12:16.145+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:12:16.147+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:12:16.157+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.018 seconds
+[2025-08-20T21:12:46.400+0000] {processor.py:157} INFO - Started process (PID=286) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:12:46.401+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:12:46.401+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:12:46.401+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:12:46.405+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:12:46.404+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:12:46.406+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:12:46.416+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.018 seconds
+[2025-08-20T21:13:16.687+0000] {processor.py:157} INFO - Started process (PID=291) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:13:16.688+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:13:16.689+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:13:16.688+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:13:16.693+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:13:16.692+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:13:16.693+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:13:16.704+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.019 seconds
+[2025-08-20T21:13:46.966+0000] {processor.py:157} INFO - Started process (PID=296) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:13:46.967+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:13:46.968+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:13:46.967+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:13:46.971+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:13:46.970+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:13:46.972+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:13:46.983+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.019 seconds
+[2025-08-20T21:14:17.251+0000] {processor.py:157} INFO - Started process (PID=301) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:14:17.251+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:14:17.252+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:14:17.251+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:14:17.255+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:14:17.254+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:14:17.255+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:14:17.265+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.017 seconds
+[2025-08-20T21:14:47.522+0000] {processor.py:157} INFO - Started process (PID=306) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:14:47.523+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:14:47.523+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:14:47.523+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:14:47.526+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:14:47.525+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:14:47.526+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:14:47.537+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.017 seconds
+[2025-08-20T21:15:17.801+0000] {processor.py:157} INFO - Started process (PID=311) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:15:17.801+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:15:17.802+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:15:17.802+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:15:17.806+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:15:17.805+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:15:17.806+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:15:17.816+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.018 seconds
+[2025-08-20T21:15:48.076+0000] {processor.py:157} INFO - Started process (PID=316) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:15:48.076+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:15:48.077+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:15:48.077+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:15:48.080+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:15:48.080+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:15:48.081+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:15:48.090+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.017 seconds
+[2025-08-20T21:16:18.387+0000] {processor.py:157} INFO - Started process (PID=321) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:16:18.388+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:16:18.388+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:16:18.388+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:16:18.392+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:16:18.391+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:16:18.392+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:16:18.403+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.019 seconds
+[2025-08-20T21:16:48.665+0000] {processor.py:157} INFO - Started process (PID=326) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:16:48.665+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:16:48.666+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:16:48.666+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:16:48.669+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:16:48.668+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:16:48.670+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:16:48.680+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.017 seconds
+[2025-08-20T21:17:18.952+0000] {processor.py:157} INFO - Started process (PID=331) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:17:18.953+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:17:18.953+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:17:18.953+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:17:18.957+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:17:18.956+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:17:18.957+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:17:18.968+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.017 seconds
+[2025-08-20T21:17:49.238+0000] {processor.py:157} INFO - Started process (PID=336) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:17:49.238+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:17:49.239+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:17:49.239+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:17:49.243+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:17:49.242+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:17:49.243+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:17:49.253+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.017 seconds
+[2025-08-20T21:18:19.528+0000] {processor.py:157} INFO - Started process (PID=341) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:18:19.528+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:18:19.529+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:18:19.529+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:18:19.532+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:18:19.531+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:18:19.532+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:18:19.542+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.016 seconds
+[2025-08-20T21:18:49.821+0000] {processor.py:157} INFO - Started process (PID=346) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:18:49.821+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:18:49.822+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:18:49.822+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:18:49.825+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:18:49.824+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:18:49.825+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:18:49.834+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.015 seconds
+[2025-08-20T21:19:20.078+0000] {processor.py:157} INFO - Started process (PID=351) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:19:20.079+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:19:20.079+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:19:20.079+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:19:20.082+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:19:20.081+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:19:20.082+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:19:20.091+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.014 seconds
+[2025-08-20T21:19:50.340+0000] {processor.py:157} INFO - Started process (PID=356) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:19:50.341+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:19:50.341+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:19:50.341+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:19:50.345+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:19:50.344+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:19:50.345+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:19:50.356+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.018 seconds
+[2025-08-20T21:20:20.609+0000] {processor.py:157} INFO - Started process (PID=361) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:20:20.610+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:20:20.610+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:20:20.610+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:20:20.615+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:20:20.614+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:20:20.615+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:20:20.626+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.020 seconds
+[2025-08-20T21:20:50.895+0000] {processor.py:157} INFO - Started process (PID=366) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:20:50.896+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:20:50.897+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:20:50.897+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:20:50.902+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:20:50.901+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:20:50.903+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:20:50.917+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.026 seconds
+[2025-08-20T21:21:21.208+0000] {processor.py:157} INFO - Started process (PID=371) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:21:21.209+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:21:21.210+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:21:21.210+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:21:21.215+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:21:21.214+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:21:21.216+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:21:21.227+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.022 seconds
+[2025-08-20T21:21:51.493+0000] {processor.py:157} INFO - Started process (PID=376) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:21:51.493+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:21:51.494+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:21:51.494+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:21:51.498+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:21:51.497+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:21:51.498+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:21:51.508+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.018 seconds
+[2025-08-20T21:22:21.761+0000] {processor.py:157} INFO - Started process (PID=381) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:22:21.761+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:22:21.762+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:22:21.762+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:22:21.765+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:22:21.764+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:22:21.766+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:22:21.776+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.017 seconds
+[2025-08-20T21:22:52.013+0000] {processor.py:157} INFO - Started process (PID=386) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:22:52.014+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:22:52.014+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:22:52.014+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:22:52.017+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:22:52.017+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:22:52.018+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:22:52.028+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.017 seconds
+[2025-08-20T21:23:22.298+0000] {processor.py:157} INFO - Started process (PID=391) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:23:22.298+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:23:22.299+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:23:22.298+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:23:22.302+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:23:22.301+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:23:22.303+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:23:22.313+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.017 seconds
+[2025-08-20T21:23:52.593+0000] {processor.py:157} INFO - Started process (PID=396) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:23:52.593+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:23:52.594+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:23:52.594+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:23:52.597+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:23:52.596+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:23:52.597+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:23:52.608+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.018 seconds
+[2025-08-20T21:24:22.889+0000] {processor.py:157} INFO - Started process (PID=401) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:24:22.890+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:24:22.891+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:24:22.890+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:24:22.896+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:24:22.895+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:24:22.896+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:24:22.909+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.023 seconds
+[2025-08-20T21:24:53.185+0000] {processor.py:157} INFO - Started process (PID=406) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:24:53.185+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:24:53.186+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:24:53.186+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:24:53.189+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:24:53.189+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:24:53.190+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:24:53.200+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.017 seconds
+[2025-08-20T21:25:23.441+0000] {processor.py:157} INFO - Started process (PID=411) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:25:23.442+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:25:23.442+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:25:23.442+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:25:23.446+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:25:23.445+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:25:23.446+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:25:23.456+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.017 seconds
+[2025-08-20T21:25:53.713+0000] {processor.py:157} INFO - Started process (PID=416) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:25:53.714+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:25:53.715+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:25:53.714+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:25:53.719+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:25:53.718+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:25:53.719+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:25:53.731+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.020 seconds
+[2025-08-20T21:26:24.007+0000] {processor.py:157} INFO - Started process (PID=421) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:26:24.008+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:26:24.008+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:26:24.008+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:26:24.012+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:26:24.011+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:26:24.012+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:26:24.023+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.018 seconds
+[2025-08-20T21:26:54.241+0000] {processor.py:157} INFO - Started process (PID=426) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:26:54.241+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:26:54.242+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:26:54.242+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:26:54.246+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:26:54.245+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:26:54.246+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:26:54.257+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.018 seconds
+[2025-08-20T21:27:24.522+0000] {processor.py:157} INFO - Started process (PID=431) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:27:24.523+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:27:24.523+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:27:24.523+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:27:24.527+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:27:24.526+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:27:24.527+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:27:24.537+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.017 seconds
+[2025-08-20T21:27:54.801+0000] {processor.py:157} INFO - Started process (PID=436) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:27:54.801+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:27:54.802+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:27:54.802+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:27:54.805+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:27:54.804+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:27:54.805+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:27:54.815+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.017 seconds
+[2025-08-20T21:28:25.063+0000] {processor.py:157} INFO - Started process (PID=441) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:28:25.064+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:28:25.064+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:28:25.064+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:28:25.068+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:28:25.067+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:28:25.068+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:28:25.078+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.017 seconds
+[2025-08-20T21:28:55.351+0000] {processor.py:157} INFO - Started process (PID=446) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:28:55.351+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:28:55.352+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:28:55.352+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:28:55.356+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:28:55.355+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:28:55.356+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:28:55.367+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.019 seconds
+[2025-08-20T21:29:25.601+0000] {processor.py:157} INFO - Started process (PID=451) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:29:25.602+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:29:25.602+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:29:25.602+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:29:25.606+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:29:25.605+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:29:25.606+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:29:25.617+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.017 seconds
+[2025-08-20T21:29:55.864+0000] {processor.py:157} INFO - Started process (PID=456) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:29:55.864+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:29:55.865+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:29:55.865+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:29:55.869+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:29:55.868+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:29:55.869+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:29:55.880+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.019 seconds
+[2025-08-20T21:30:26.139+0000] {processor.py:157} INFO - Started process (PID=461) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:30:26.140+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:30:26.140+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:30:26.140+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:30:26.144+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:30:26.143+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:30:26.144+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:30:26.156+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.019 seconds
+[2025-08-20T21:30:56.406+0000] {processor.py:157} INFO - Started process (PID=466) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:30:56.407+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:30:56.407+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:30:56.407+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:30:56.410+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:30:56.409+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:30:56.411+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:30:56.421+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.017 seconds
+[2025-08-20T21:31:26.716+0000] {processor.py:157} INFO - Started process (PID=471) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:31:26.716+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:31:26.717+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:31:26.716+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:31:26.720+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:31:26.719+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:31:26.720+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:31:26.730+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.017 seconds
+[2025-08-20T21:31:56.993+0000] {processor.py:157} INFO - Started process (PID=476) to work on /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:31:56.993+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/crypto_ml_pipeline.py for tasks to queue
+[2025-08-20T21:31:56.994+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:31:56.994+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:31:56.997+0000] {logging_mixin.py:151} INFO - [2025-08-20T21:31:56.997+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/crypto_ml_pipeline.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 8, in <module>
+    from airflow.sensors.s3_sensor import S3KeySensor
+ModuleNotFoundError: No module named 'airflow.sensors.s3_sensor'
+[2025-08-20T21:31:56.998+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/crypto_ml_pipeline.py
+[2025-08-20T21:31:57.009+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/crypto_ml_pipeline.py took 0.018 seconds

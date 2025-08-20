@@ -1,0 +1,4 @@
+strawberry-graphql[fastapi]
+fastapi==0.103.1
+uvicorn[standard]==0.23.2
+requests==2.31.0
