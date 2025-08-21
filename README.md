@@ -1,93 +1,95 @@
 # 🚀 Crypto MLOps MVP
 
-> **Infra mínima viva para señales de riesgo y volatilidad cripto**
+> Infraestructura completa de MLOps para señales de riesgo y volatilidad de criptomonedas con capacidades avanzadas de ML, orquestación, APIs modernas y streaming en tiempo real.
 
-[![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)](https://docker.com)
-[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
-[![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=flat&logo=python&logoColor=white)](https://python.org)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-
-## 📚 Información Académica
-
-**🎓 Trabajo Final** de la materia **Operaciones de Aprendizaje de Máquina 2**  
+## 🎯 Trabajo Final - Operaciones de Aprendizaje de Máquina 2
 **🏛️ Curso de Especialización en Inteligencia Artificial**
 
-### 👨‍🎓 Alumnos:
-- **Pablo Ariel Menardi** - `a1814`
-- **Ezequiel Alejandro Caamaño** - `a1802`
+**Autores:**
+- Pablo Ariel Menardi (a1814)  
+- Ezequiel Alejandro Caamaño (a1802)
 
 ---
 
-## 🎯 Proyecto
+## 📋 Resumen Ejecutivo
 
-**Objetivo:** Exponer señales simples de riesgo y volatilidad para cripto (hoy: BTC/USDT) a través de una API FastAPI corriendo en Docker, con persistencia local y utilidades básicas de operación (métricas, reporte diario y una UI mínima).
+**Objetivo:** Exponer señales simples de riesgo y volatilidad para criptomonedas (BTC/USDT) a través de una infraestructura MLOps completa con APIs modernas, streaming en tiempo real y capacidades de ML avanzadas.
 
-**Enfoque:** **MVP** - Todo en local, sin nubes ni servicios pagos.
+**Enfoque:** MVP local sin dependencias de servicios cloud pagos, pero con arquitectura enterprise-ready.
+
+**Aclaración Importante:** Los resultados obtenidos con el presente trabajo, no constituyen recomendación de operaciones en mercados reales. Su desarrollo tiene SOLO FINES ACADÉMICOS
 
 ---
 
-# Crypto MLOps MVP - Extended Edition
-
-Infraestructura completa de MLOps para señales de riesgo y volatilidad de criptomonedas con capacidades avanzadas de ML, orquestación, APIs modernas y streaming en tiempo real.
-
-## 🎯 Características Principales
-
-- **🤖 Machine Learning**: Modelo LSTM para predicción de volatilidad
-- **📊 MLFlow**: Tracking de experimentos y model registry
-- **🔄 Orquestación**: Pipelines automatizados con Airflow + MinIO
-- **🌐 APIs Modernas**: REST, GraphQL y gRPC
-- **📡 Streaming**: Kafka para datos en tiempo real
-- **📈 Dashboards**: Interfaces web para monitoreo y análisis
-- **🐳 Docker**: Todo containerizado y fácil de deployar
-
-## 🏗️ Arquitectura
+## 🏗️ Arquitectura del Sistema
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
 │                        CRYPTO MLOPS ARCHITECTURE                    │
 ├─────────────────────────────────────────────────────────────────────┤
-│  Client Layer                                                       │
-│  ┌─────────────┬─────────────┬─────────────┬─────────────────────┐  │
-│  │   REST API  │   GraphQL   │    gRPC     │    Web Dashboards   │  │
-│  │ :8800/docs  │ :4000/gql   │   :50051    │   Multiple UIs      │  │
-│  └─────────────┴─────────────┴─────────────┴─────────────────────┘  │
+│ Client Layer                                                        │
+│ ┌─────────────┬─────────────┬─────────────┬─────────────────────┐   │
+│ │ REST API    │ GraphQL     │ gRPC        │ Web Dashboards      │   │
+│ │ :8800/docs  │ :4000/gql   │ :50051      │ Multiple UIs        │   │
+│ └─────────────┴─────────────┴─────────────┴─────────────────────┘   │
 │                                                                     │
-│  Processing Layer                                                   │
-│  ┌─────────────┬─────────────┬─────────────┬─────────────────────┐  │
-│  │   FastAPI   │  ML Service │  Streaming  │      Airflow        │  │
-│  │ (Main API)  │   (LSTM)    │   (Kafka)   │   (Pipelines)       │  │
-│  └─────────────┴─────────────┴─────────────┴─────────────────────┘  │
+│ Processing Layer                                                    │
+│ ┌─────────────┬─────────────┬─────────────┬─────────────────────┐   │
+│ │ FastAPI     │ ML Service  │ Streaming   │ Airflow             │   │
+│ │ (Main API)  │ (LSTM)      │ (Kafka)     │ (Pipelines)         │   │
+│ └─────────────┴─────────────┴─────────────┴─────────────────────┘   │
 │                                                                     │
-│  Data & ML Layer                                                    │
-│  ┌─────────────┬─────────────┬─────────────┬─────────────────────┐  │
-│  │   MLFlow    │    MinIO    │ PostgreSQL  │    Kafka Topics     │  │
-│  │ :5000/ui    │ :9001/ui    │    (DB)     │  (prices/alerts)    │  │
-│  └─────────────┴─────────────┴─────────────┴─────────────────────┘  │
+│ Data & ML Layer                                                     │
+│ ┌─────────────┬─────────────┬─────────────┬─────────────────────┐   │
+│ │ MLFlow      │ MinIO       │ PostgreSQL  │ Kafka Topics        │   │
+│ │ :5000/ui    │ :9001/ui    │ (DB)        │ (prices/alerts)     │   │
+│ └─────────────┴─────────────┴─────────────┴─────────────────────┘   │
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
-## ⚡ Instalación Rápida
+## ✨ Características Principales
 
-### Prerequisitos
-- Docker Desktop (con al menos 8GB RAM disponibles)
+- **🤖 Machine Learning:** Modelo LSTM bidireccional para predicción de volatilidad
+- **📊 MLFlow:** Tracking completo de experimentos y model registry
+- **🔄 Orquestación:** Pipelines automatizados con Airflow + MinIO
+- **🌐 APIs Modernas:** REST, GraphQL y gRPC para máxima flexibilidad
+- **📡 Streaming:** Kafka para datos en tiempo real
+- **📈 Dashboards:** Interfaces web para monitoreo y análisis
+- **🐳 Docker:** Todo containerizado y production-ready
+
+---
+
+## 🛠️ Prerrequisitos
+
+**Sistema Operativo:** Linux, macOS, o Windows con WSL2
+
+**Requisitos:**
+- Docker Desktop con **mínimo 8GB RAM** disponibles
 - Git
-- 10GB+ espacio libre en disco
+- **10GB+** de espacio libre en disco
+- Puertos disponibles: 8800, 5000, 8080, 9001, 4000, 8088, 50051, 9092
 
-### Setup Automático
+---
+
+## 🚀 Instalación Rápida
+
+### Opción 1: Setup Automatizado (Recomendado)
+
 ```bash
-# Clonar repositorio
+# 1. Clonar repositorio
 git clone https://github.com/pabmena/crypto-mlops-mvp.git
 cd crypto-mlops-mvp
 
-# Ejecutar setup completo (recomendado)
+# 2. Cambiar a la branch correcta
+git checkout feature/mlflow-implementation
+
+# 3. Ejecutar setup completo
 chmod +x scripts/setup.sh
 ./scripts/setup.sh
-
-# O usar make si prefieres
-make setup
 ```
 
-### Setup Manual
+### Opción 2: Setup Manual
+
 ```bash
 # 1. Crear archivos de configuración
 cp .env.example .env
@@ -100,46 +102,69 @@ make check-health
 
 # 4. Configurar buckets de MinIO
 make setup-buckets
+
+# 5. Entrenar modelo inicial (opcional)
+make train-model
 ```
 
-## 📊 Dashboards y Servicios
+### Opción 3: Usando Make
 
-Después de la instalación, tendrás acceso a:
+```bash
+# Todo en un comando
+make setup
+```
+
+---
+
+## 🌐 Servicios Disponibles
+
+Una vez iniciado el sistema, tendrás acceso a:
 
 | Servicio | URL | Credenciales | Descripción |
-|----------|-----|-------------|-------------|
-| **FastAPI** | http://localhost:8800 | - | API REST principal |
-| **FastAPI Docs** | http://localhost:8800/docs | - | Swagger UI |
-| **MLFlow** | http://localhost:5000 | - | Experiments & Models |
-| **Airflow** | http://localhost:8080 | admin/admin123 | Pipeline orchestration |
-| **MinIO Console** | http://localhost:9001 | minioadmin/minioadmin123 | Data lake storage |
-| **GraphQL** | http://localhost:4000/graphql | - | GraphQL playground |
-| **gRPC Server** | localhost:50051 | - | gRPC API |
-| **Kafka UI** | http://localhost:8088 | - | Stream monitoring |
-| **Original UI** | file://./ui/index.html | - | Simple web interface |
+|----------|-----|--------------|-------------|
+| **FastAPI** | [http://localhost:8800/docs](http://localhost:8800/docs) | - | API principal con Swagger UI |
+| **MLFlow** | [http://localhost:5000](http://localhost:5000) | - | Experimentos ML y model registry |
+| **Airflow** | [http://localhost:8080](http://localhost:8080) | `admin/admin` | Orquestación de pipelines |
+| **MinIO** | [http://localhost:9001](http://localhost:9001) | `minioadmin/minioadmin123` | Object storage UI |
+| **GraphQL** | [http://localhost:4000/graphql](http://localhost:4000/graphql) | - | Playground GraphQL |
+| **Kafka UI** | [http://localhost:8088](http://localhost:8088) | - | Monitoreo de topics Kafka |
 
-## 🚀 Uso Rápido
+---
 
-### 1. Generar Señal Heurística
+## 🧪 Testing y Verificación
+
+### Verificar Estado del Sistema
+
 ```bash
+# Estado de todos los servicios
+make check-health
+
+# URLs de todos los dashboards
+make dashboard-urls
+
+# Monitoreo en tiempo real
+make monitor
+```
+
+### Tests de API REST
+
+```bash
+# Señal heurística básica
 curl -X POST "http://localhost:8800/v1/crypto/signal" \
   -H "Content-Type: application/json" \
   -d '{"symbol":"BTCUSDT","explain":true}'
-```
 
-### 2. Generar Predicción ML
-```bash
+# Predicción con ML
 curl -X POST "http://localhost:8800/v1/crypto/ml-signal" \
   -H "Content-Type: application/json" \
   -d '{"symbol":"BTCUSDT","include_heuristic":true}'
-```
 
-### 3. Comparar Métodos
-```bash
+# Comparación de métodos
 curl "http://localhost:8800/v1/crypto/signals/compare?symbol=BTCUSDT"
 ```
 
-### 4. GraphQL Query
+### Test GraphQL
+
 ```graphql
 query {
   health {
@@ -153,90 +178,34 @@ query {
 }
 ```
 
-### 5. Ver Streaming en Tiempo Real
-```bash
-# Monitorear tópicos de Kafka
-make show-kafka-topics
-
-# Ver logs del streaming
-make logs-kafka
-```
-
-## 🔧 Comandos Útiles
+### Tests Automatizados
 
 ```bash
-# Estado de servicios
-make check-health
-make dashboard-urls
+# Ejecutar suite completa de tests
+make test-apis
 
-# Logs y monitoreo
-make logs                    # Todos los logs
-make logs-api               # Solo API
-make logs-kafka             # Solo Kafka streaming
-make monitor                # Monitoreo en tiempo real
+# Generar datos de prueba
+make generate-test-data
 
-# Gestión de datos
-make train-model            # Entrenar modelo ML
-make test-apis              # Probar todos los endpoints
-make generate-test-data     # Generar datos de prueba
-
-# Mantenimiento
-make clean                  # Limpiar recursos Docker
-make backup-data            # Backup de datos
-make dev-reset              # Reset completo del entorno
+# Tests unitarios
+make test
 ```
 
-## 📡 APIs Disponibles
+---
 
-### REST API (FastAPI)
-```bash
-# Endpoints principales
-GET  /health                           # Health check
-GET  /metrics                          # Métricas del sistema
-GET  /v1/crypto/ohlcv                  # Datos OHLCV
-POST /v1/crypto/signal                 # Señal heurística
-POST /v1/crypto/ml-signal              # Predicción ML
-GET  /v1/crypto/signals/compare        # Comparar métodos
-GET  /v1/ml/model/info                 # Info del modelo
-POST /v1/ml/model/reload               # Recargar modelo
-```
-
-### GraphQL API
-```bash
-# Endpoint: http://localhost:4000/graphql
-# Queries disponibles:
-- health(): HealthStatus
-- modelInfo(): ModelInfo  
-- ohlcvData(input): OHLCVResponse
-
-# Mutations disponibles:
-- generateSignal(input): Signal
-- generateMlSignal(input): MLSignal
-```
-
-### gRPC API
-```bash
-# Puerto: 50051
-# Servicios disponibles:
-- GetOHLCV(OHLCVRequest) -> OHLCVResponse
-- GenerateSignal(SignalRequest) -> SignalResponse
-- GenerateMLPrediction(MLPredictionRequest) -> MLPredictionResponse
-- CompareSignals(CompareSignalsRequest) -> CompareSignalsResponse
-- HealthCheck(HealthCheckRequest) -> HealthCheckResponse
-- StreamPrices(StreamRequest) -> stream PriceUpdate
-```
-
-## 🤖 Machine Learning
+## 📊 Machine Learning
 
 ### Modelo LSTM
-- **Arquitectura**: LSTM bidireccional para predicción de volatilidad
-- **Features**: Precio, volumen, indicadores técnicos (RSI, SMA, Bollinger)
-- **Target**: Volatilidad futura (24h)
-- **Framework**: TensorFlow/Keras
 
-### Entrenamiento
+**Arquitectura:** LSTM bidireccional para predicción de volatilidad  
+**Features:** Precio, volumen, RSI, SMA, Bollinger Bands  
+**Target:** Volatilidad futura (24h)  
+**Framework:** TensorFlow/Keras
+
+### Gestión del Modelo
+
 ```bash
-# Entrenar modelo manualmente
+# Entrenar modelo desde cero
 make train-model
 
 # Ver experimentos en MLFlow
@@ -246,118 +215,243 @@ open http://localhost:5000
 curl -X POST http://localhost:8800/v1/ml/model/reload
 ```
 
+### Endpoints ML
+
+| Endpoint | Método | Descripción |
+|----------|---------|------------|
+| `/v1/ml/model/info` | GET | Información del modelo actual |
+| `/v1/ml/model/reload` | POST | Recargar modelo desde MLFlow |
+| `/v1/crypto/ml-signal` | POST | Generar predicción ML |
+| `/v1/crypto/signals/compare` | GET | Comparar métodos heurístico vs ML |
+
+---
+
 ## 🔄 Orquestación con Airflow
 
-### DAGs Disponibles
-- **crypto_ml_pipeline**: Pipeline completo de ML
-  - Extracción de datos crypto
-  - Procesamiento y feature engineering
-  - Validación de calidad
-  - Reentrenamiento de modelo
-  - Deploy automático
+### DAG Principal: `crypto_ml_pipeline`
 
-### Monitoreo
+**Tareas:**
+1. Extracción de datos crypto
+2. Procesamiento y feature engineering  
+3. Validación de calidad de datos
+4. Reentrenamiento de modelo
+5. Deploy automático a producción
+
+### Gestión de Pipelines
+
 ```bash
-# Ver Airflow UI
+# Acceder a Airflow UI
 open http://localhost:8080
 
-# Ejecutar DAG manualmente
-# Desde la UI de Airflow, triggear "crypto_ml_pipeline"
+# Ver logs de Airflow
+make logs-airflow
+
+# Triggear pipeline manualmente desde UI o:
+# En Airflow UI -> DAGs -> crypto_ml_pipeline -> Trigger DAG
 ```
 
-## 📊 Data Lake (MinIO)
-
-### Buckets Creados
-- **raw-data**: Datos crudos de exchanges
-- **processed-data**: Datos procesados con features
-- **models**: Modelos ML entrenados
-- **mlflow**: Artefactos de MLFlow
-- **quality-reports**: Reportes de calidad
-
-### Acceso
-```bash
-# UI de MinIO
-open http://localhost:9001
-
-# CLI (dentro del container)
-docker-compose exec minio mc ls local/
-```
+---
 
 ## 📡 Streaming con Kafka
 
-### Tópicos
-- **crypto-prices**: Precios en tiempo real
-- **predictions**: Predicciones generadas
-- **alerts**: Alertas de anomalías
+### Topics Disponibles
 
-### Monitoreo
+- **crypto-prices:** Precios en tiempo real
+- **predictions:** Predicciones generadas  
+- **alerts:** Alertas de anomalías
+
+### Monitoreo de Streaming
+
 ```bash
+# Ver topics activos
+make show-kafka-topics
+
+# Logs del streaming
+make logs-kafka
+
 # UI de Kafka
 open http://localhost:8088
-
-# Ver mensajes en tiempo real
-make show-kafka-topics
 ```
 
-## 📈 Métricas y Monitoreo
+### Ejemplo de Mensaje
 
-### Métricas Disponibles
 ```json
 {
-  "start_time": "2025-01-20T10:00:00Z",
-  "requests_total": 1542,
-  "signals_total": 234,
-  "ml_predictions_total": 89,
-  "last_signal_at": "2025-01-20T10:30:00Z",
-  "last_ml_prediction_at": "2025-01-20T10:25:00Z"
+  "symbol": "BTCUSDT",
+  "price": 43250.00,
+  "volume": 1234.56,
+  "timestamp": "2025-08-21T10:30:00Z",
+  "volatility_prediction": 0.0234
 }
 ```
 
-### Dashboard en Tiempo Real
+---
+
+## 💾 Gestión de Datos con MinIO
+
+### Buckets Automáticos
+
+- **raw-data:** Datos crudos de exchanges
+- **processed-data:** Features procesadas
+- **models:** Modelos ML entrenados
+- **mlflow:** Artefactos de MLFlow
+- **quality-reports:** Reportes de calidad
+
+### Comandos Útiles
+
 ```bash
-make monitor  # Monitoreo interactivo
+# Acceder a MinIO UI
+open http://localhost:9001
+
+# CLI dentro del container
+docker-compose exec minio mc ls local/
+
+# Backup de datos
+make backup-data
 ```
 
-## 🧪 Testing
+---
+
+## 🔌 APIs Disponibles
+
+### REST API (FastAPI)
+
+**Base URL:** `http://localhost:8800`
+
+#### Endpoints Principales
 
 ```bash
-# Tests unitarios
-make test
-
-# Test de APIs
-make test-apis
-
-# Generación de datos de prueba
-make generate-test-data
+GET    /health              # Health check
+GET    /metrics             # Métricas del sistema  
+GET    /v1/crypto/ohlcv     # Datos OHLCV
+POST   /v1/crypto/signal    # Señal heurística
+POST   /v1/crypto/ml-signal # Predicción ML
+GET    /v1/crypto/signals/compare # Comparar métodos
 ```
 
-## 🛠 Desarrollo
+### GraphQL API
 
-### Estructura de Carpetas
-```
-crypto-mlops-mvp/
-├── api/                    # FastAPI application
-├── ml/                     # ML models and services
-│   ├── models/            # Model definitions
-│   ├── inference/         # Inference service
-│   └── mlflow/           # MLFlow configuration
-├── airflow/               # Airflow DAGs
-├── streaming/             # Kafka producer/consumer
-├── grpc/                  # gRPC server
-├── graphql/               # GraphQL server
-├── scripts/               # Setup and utility scripts
-└── data/                  # Persistent data
+**URL:** `http://localhost:4000/graphql`
+
+#### Queries Disponibles
+
+- `health()`: Estado del sistema
+- `modelInfo()`: Información del modelo ML  
+- `ohlcvData(input)`: Datos históricos
+
+#### Mutations Disponibles
+
+- `generateSignal(input)`: Generar señal heurística
+- `generateMlSignal(input)`: Generar predicción ML
+
+### gRPC API
+
+**Puerto:** `50051`
+
+#### Servicios Disponibles
+
+- `GetOHLCV`: Obtener datos históricos
+- `GenerateSignal`: Generar señal heurística  
+- `GenerateMLPrediction`: Predicción ML
+- `CompareSignals`: Comparar métodos
+- `HealthCheck`: Verificar estado
+- `StreamPrices`: Stream de precios en tiempo real
+
+---
+
+## 📈 Monitoreo y Métricas
+
+### Métricas del Sistema
+
+```bash
+# Ver métricas en tiempo real
+curl http://localhost:8800/metrics
 ```
 
-### Variables de Entorno
-Todas las configuraciones están en `.env`:
+### Ejemplo de Respuesta
+
+```json
+{
+  "start_time": "2025-08-21T10:00:00Z",
+  "requests_total": 1542,
+  "signals_total": 234, 
+  "ml_predictions_total": 89,
+  "last_signal_at": "2025-08-21T10:30:00Z",
+  "last_ml_prediction_at": "2025-08-21T10:25:00Z"
+}
+```
+
+### Comandos de Monitoreo
+
+```bash
+# Monitoreo interactivo
+make monitor
+
+# Logs por servicio
+make logs-api      # Solo API
+make logs-mlflow   # Solo MLFlow  
+make logs-kafka    # Solo Kafka
+make logs-airflow  # Solo Airflow
+
+# Todos los logs
+make logs
+```
+
+---
+
+## 🛠️ Comandos Make Disponibles
+
+### Setup y Configuración
+```bash
+make setup          # Setup completo automático
+make check-health    # Verificar estado de servicios  
+make setup-buckets   # Configurar buckets de MinIO
+```
+
+### Desarrollo y Testing  
+```bash
+make test           # Tests unitarios
+make test-apis      # Tests de endpoints
+make train-model    # Entrenar modelo ML
+make generate-test-data # Generar datos de prueba
+```
+
+### Monitoreo y Logs
+```bash
+make monitor        # Monitoreo en tiempo real
+make dashboard-urls # URLs de dashboards
+make logs          # Ver todos los logs
+make logs-api      # Logs específicos del API
+```
+
+### Mantenimiento
+```bash
+make clean         # Limpiar recursos Docker
+make backup-data   # Backup de datos
+make dev-reset     # Reset completo del entorno
+```
+
+### Kafka y Streaming
+```bash
+make show-kafka-topics # Ver topics de Kafka
+make logs-kafka       # Logs del streaming
+```
+
+---
+
+## ⚙️ Configuración
+
+### Variables de Entorno (.env)
+
 ```bash
 # Database
 POSTGRES_USER=mlops
 POSTGRES_PASSWORD=mlops123
+POSTGRES_DB=crypto_mlops
 
-# MLFlow
+# MLFlow  
 MLFLOW_TRACKING_URI=http://localhost:5000
+MLFLOW_BACKEND_STORE_URI=postgresql://mlops:mlops123@postgres:5432/crypto_mlops
 
 # MinIO
 MINIO_ACCESS_KEY=minioadmin
@@ -365,89 +459,168 @@ MINIO_SECRET_KEY=minioadmin123
 
 # Kafka
 KAFKA_BOOTSTRAP_SERVERS=localhost:9092
+KAFKA_AUTO_CREATE_TOPICS_ENABLE=true
+
+# API Keys (opcional para datos reales)
+BINANCE_API_KEY=your_api_key
+BINANCE_SECRET_KEY=your_secret_key
 ```
 
-## 🔧 Troubleshooting
+---
+
+## 🐛 Troubleshooting
 
 ### Problemas Comunes
 
-1. **Servicios no responden**
+#### Servicios no responden
 ```bash
-make check-health          # Verificar estado
-docker-compose restart api # Reiniciar servicio específico
+make check-health
+docker-compose restart api
 ```
 
-2. **Falta de memoria**
+#### Falta de memoria
 ```bash
-docker system prune -f     # Limpiar recursos
-make clean                 # Reset completo
+docker system prune -f
+make clean
 ```
 
-3. **Puerto ocupado**
+#### Puerto ocupado
 ```bash
-sudo netstat -tlnp | grep :8800  # Ver qué usa el puerto
+# Verificar qué proceso usa el puerto
+sudo netstat -tlnp | grep :8800
+
+# Liberar puerto si es necesario
+sudo kill -9 <PID>
 ```
 
-4. **MLFlow no conecta**
+#### MLFlow no conecta
 ```bash
-make logs-mlflow           # Ver logs de MLFlow
+make logs-mlflow
 docker-compose restart mlflow postgres
 ```
 
-5. **Kafka no produce/consume**
+#### Kafka no produce/consume  
 ```bash
-make logs-kafka            # Ver logs de Kafka
+make logs-kafka
 docker-compose restart kafka zookeeper
 ```
 
-### Logs Útiles
+### Logs Detallados
+
 ```bash
 # Ver todos los logs
 make logs
 
-# Logs específicos por servicio
+# Logs específicos por servicio  
 docker-compose logs -f api
-docker-compose logs -f mlflow  
+docker-compose logs -f mlflow
 docker-compose logs -f airflow-webserver
 docker-compose logs -f crypto-producer
 ```
 
-## 🚢 Deployment
+### Reset Completo
 
-### Producción
-Para un entorno de producción, considera:
+```bash
+# Si nada funciona, reset completo
+make dev-reset
+```
 
-1. **Seguridad**
-   - Cambiar credenciales por defecto
-   - Configurar HTTPS/TLS
-   - Implementar autenticación
+---
 
-2. **Escalabilidad**
-   - Usar Kubernetes en lugar de Docker Compose
-   - Configurar auto-scaling
-   - Load balancers
+## 🏭 Consideraciones para Producción
 
-3. **Monitoreo**
-   - Integrar con Prometheus/Grafana
-   - Configurar alertas
-   - Logging centralizado
+### Seguridad
 
-## 📄 Licencia
+- **Cambiar credenciales por defecto** en `.env`
+- **Configurar HTTPS/TLS** para todos los servicios
+- **Implementar autenticación** y autorización
+- **Configurar firewall** y network policies
+
+### Escalabilidad
+
+- **Migrar a Kubernetes** en lugar de Docker Compose
+- **Configurar auto-scaling** para componentes críticos
+- **Implementar load balancers**
+- **Usar base de datos gestionada**
+
+### Monitoreo
+
+- **Integrar con Prometheus/Grafana**
+- **Configurar alertas** proactivas
+- **Logging centralizado** con ELK Stack
+- **APM** para performance monitoring
+
+### Backup y Recuperación
+
+- **Backup automático** de datos críticos
+- **Disaster recovery plan**
+- **Testing de backups** regular
+
+---
+
+## 📁 Estructura del Proyecto
+
+```
+crypto-mlops-mvp/
+├── api/                    # FastAPI application
+│   ├── models/            # Pydantic models
+│   ├── routes/            # API routes  
+│   └── services/          # Business logic
+├── ml/                     # ML models and services
+│   ├── models/            # Model definitions
+│   ├── inference/         # Inference service
+│   ├── training/          # Training scripts
+│   └── mlflow/            # MLFlow configuration
+├── airflow/               # Airflow DAGs
+│   ├── dags/             # DAG definitions
+│   └── plugins/          # Custom plugins
+├── streaming/             # Kafka producer/consumer
+│   ├── producer/         # Data producers
+│   └── consumer/         # Data consumers
+├── grpc/                  # gRPC server
+├── graphql/               # GraphQL server  
+├── scripts/               # Setup and utility scripts
+├── data/                  # Persistent data
+├── docker-compose.yml     # Services orchestration
+├── .env.example          # Environment variables template
+├── Makefile              # Automation commands
+└── README.md             # This file
+```
+
+---
+
+## 🤝 Contribuir
+
+1. **Fork** del proyecto
+2. Crear **feature branch**: `git checkout -b feature/nueva-funcionalidad`  
+3. **Commit** cambios: `git commit -am 'Agregar nueva funcionalidad'`
+4. **Push** a la branch: `git push origin feature/nueva-funcionalidad`
+5. Crear **Pull Request**
+
+---
+
+## 📝 Licencia
 
 MIT License - Ver [LICENSE](LICENSE) para más detalles.
 
-## 🤝 Contribución
+---
 
-1. Fork del proyecto
-2. Crear feature branch (`git checkout -b feature/nueva-funcionalidad`)
-3. Commit cambios (`git commit -am 'Agregar nueva funcionalidad'`)
-4. Push a la branch (`git push origin feature/nueva-funcionalidad`)
-5. Crear Pull Request
+## 📞 Soporte
 
-## 📚 Referencias
+Para reportar bugs o solicitar features:
+- **Issues:** [GitHub Issues](https://github.com/pabmena/crypto-mlops-mvp/issues)
+- **Documentación:** Este README
+- **Contacto:** Pablo Menardi & Ezequiel Caamaño
 
-- [FastAPI Documentation](https://fastapi.tiangolo.com/)
-- [MLFlow Documentation](https://mlflow.org/docs/latest/index.html)
-- [Apache Airflow](https://airflow.apache.org/docs/)
-- [Kafka Documentation](https://kafka.apache.org/documentation/)
-- [MinIO Documentation](https://docs.min.io/)
+---
+
+## 🙏 Agradecimientos
+
+Proyecto desarrollado como Trabajo Final para la materia **Operaciones de Aprendizaje de Máquina 2** del **Curso de Especialización en Inteligencia Artificial**.
+
+**Universidad:** Universidad de Buenos Aires  
+**Año:** 2025
+
+---
+
+> 💡 **Tip:** Para una experiencia óptima, inicia con `make setup` y luego accede a http://localhost:8800/docs para explorar la API interactiva.
