@@ -150,7 +150,7 @@ wait_for_service() {
 }
 
 # Wait for key services
-wait_for_service "FastAPI" "http://localhost:8800/health"
+wait_for_service "FastAPI" "http://localhost:8800/"
 wait_for_service "MinIO" "http://localhost:9000/minio/health/live"
 
 # Setup MinIO buckets

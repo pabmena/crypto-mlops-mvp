@@ -1,6 +1,7 @@
 """
 Modelo LSTM para predicción de volatilidad de criptomonedas
 """
+import os
 import numpy as np
 import pandas as pd
 import mlflow
@@ -243,6 +244,28 @@ class VolatilityLSTM:
             self.scaler_y = joblib.load(scaler_y_path)
 
 
+def setup_mlflow_environment():
+    """Configurar el entorno de MLflow para usar MinIO local"""
+    
+    # Configurar variables de entorno para MinIO (S3 compatible)
+    os.environ["AWS_ACCESS_KEY_ID"] = "minioadmin"
+    os.environ["AWS_SECRET_ACCESS_KEY"] = "minioadmin123"
+    
+    # Usar las variables de entorno del docker-compose si existen
+    mlflow_uri = os.environ.get("MLFLOW_TRACKING_URI", "http://mlflow:5000")
+    s3_endpoint = os.environ.get("MLFLOW_S3_ENDPOINT_URL", "http://minio:9000")
+    
+    os.environ["MLFLOW_S3_ENDPOINT_URL"] = s3_endpoint
+    mlflow.set_tracking_uri(mlflow_uri)
+    
+    # Silenciar warning de Git
+    os.environ["GIT_PYTHON_REFRESH"] = "quiet"
+    
+    print(f"MLflow Tracking URI: {mlflow.get_tracking_uri()}")
+    print(f"S3 Endpoint: {s3_endpoint}")
+    print("Using MinIO S3 local storage for artifacts")
+
+
 def train_model_pipeline(symbol="BTCUSDT", days_back=30):
     """Pipeline completo de entrenamiento"""
     import ccxt
@@ -281,7 +304,10 @@ def train_model_pipeline(symbol="BTCUSDT", days_back=30):
 
 
 if __name__ == "__main__":
-    # Configurar MLflow
+    # Configurar entorno MLflow
+    setup_mlflow_environment()
+    
+    # Configurar experimento
     mlflow.set_experiment("crypto_volatility_prediction")
     
     # Entrenar modelo
