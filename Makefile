@@ -146,19 +146,19 @@ test-apis: ## Test all API endpoints
 generate-test-data: ## Generate test streaming data
 	@echo "$(GREEN)📡 Generating test streaming data...$(NC)"
 	docker-compose exec crypto-producer python -c "
-import time
-from crypto_producer import CryptoProducer
-producer = CryptoProducer()
-print('Sending 10 test messages...')
-for i in range(10):
-    for symbol in ['BTC/USDT', 'ETH/USDT']:
-        data = producer.simulate_price_movement(symbol)
-        producer.send_price_update(data)
-        print(f'Sent {symbol}: \$${data[\"price\"]:.2f}')
-    time.sleep(1)
-producer.close()
-print('Test data generation completed!')
-"
+	import time
+	from crypto_producer import CryptoProducer
+	producer = CryptoProducer()
+	print('Sending 10 test messages...')
+	for i in range(10):
+	    for symbol in ['BTC/USDT', 'ETH/USDT']:
+	        data = producer.simulate_price_movement(symbol)
+	        producer.send_price_update(data)
+	        print(f'Sent {symbol}: \$${data[\"price\"]:.2f}')
+	    time.sleep(1)
+	producer.close()
+	print('Test data generation completed!')
+	"
 
 show-kafka-topics: ## Show Kafka topics and messages
 	@echo "$(GREEN)📊 Kafka Topics Status:$(NC)"

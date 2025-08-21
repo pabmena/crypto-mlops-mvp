@@ -180,7 +180,8 @@ class VolatilityLSTM:
             mlflow.tensorflow.log_model(
                 self.model, 
                 "model",
-                signature=mlflow.models.signature.infer_signature(X_train_seq, y_pred_scaled)
+                signature=mlflow.models.signature.infer_signature(X_train_seq, y_pred_scaled),
+                keras_model_kwargs={"save_format": "h5"}
             )
             
             # Log artifacts (scalers)

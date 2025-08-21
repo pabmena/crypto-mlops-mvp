@@ -4,8 +4,8 @@ DAG de Airflow para pipeline de ML de criptomonedas
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.python import PythonOperator
-from airflow.operators.bash import BashOperator
-from airflow.sensors.s3_sensor import S3KeySensor
+# from airflow.operators.bash import BashOperator
+# from airflow.sensors.s3_sensor import S3KeySensor
 import pandas as pd
 import ccxt
 import mlflow
@@ -363,7 +363,7 @@ def deploy_model(**context):
         # Notificar a la API que recargue el modelo
         import requests
         try:
-            response = requests.post("http://api:8000/v1/ml/model/reload")
+            response = requests.post("http://api:8800/v1/ml/model/reload")
             if response.status_code == 200:
                 print("✅ API model reloaded successfully")
             else:

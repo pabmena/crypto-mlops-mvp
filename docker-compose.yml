@@ -69,7 +69,7 @@ services:
 
   # === AIRFLOW ===
   airflow-init:
-    image: apache/airflow:2.7.1
+    build: ./airflow
     environment:
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://mlops:mlops123@postgres:5432/airflow
@@ -92,7 +92,7 @@ services:
       "
 
   airflow-webserver:
-    image: apache/airflow:2.7.1
+    build: ./airflow
     ports:
       - "8080:8080"
     environment:
@@ -114,7 +114,7 @@ services:
     command: airflow webserver
 
   airflow-scheduler:
-    image: apache/airflow:2.7.1
+    build: ./airflow
     environment:
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://mlops:mlops123@postgres:5432/airflow
