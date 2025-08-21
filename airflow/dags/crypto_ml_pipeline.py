@@ -4,8 +4,7 @@ DAG de Airflow para pipeline de ML de criptomonedas
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.python import PythonOperator
-# from airflow.operators.bash import BashOperator
-# from airflow.sensors.s3_sensor import S3KeySensor
+from io import BytesIO
 import pandas as pd
 import ccxt
 import mlflow
@@ -13,6 +12,10 @@ import boto3
 from minio import Minio
 import json
 import os
+import sys
+import random
+import time
+import tensorflow as tf
 
 # Configuración
 default_args = {
@@ -24,6 +27,10 @@ default_args = {
     'retries': 1,
     'retry_delay': timedelta(minutes=5)
 }
+
+# La ruta para importar tu modelo
+sys.path.append('/opt/airflow/ml/models')
+from volatility_lstm import VolatilityLSTM 
 
 # Configurar MinIO client
 def get_minio_client():
@@ -264,76 +271,47 @@ def validate_data_quality(**context):
     
     return quality_report
 
+from ml.models.volatility_lstm import train_model_pipeline, setup_mlflow_environment
+import mlflow
+
 def retrain_model(**context):
-    """Task 4: Reentrenar modelo ML"""
-    print("🤖 Retraining ML model...")
-    
-    # Configurar MLflow
-    mlflow.set_tracking_uri("http://mlflow:5000")
-    mlflow.set_experiment("crypto_volatility_prediction")
-    
-    ti = context['task_instance']
-    file_path = ti.xcom_pull(task_ids='process_crypto_data')
-    bucket_name, file_name = file_path.split('/', 1)
-    
-    # Descargar datos procesados
-    minio_client = get_minio_client()
-    response = minio_client.get_object(bucket_name, file_name)
-    processed_data = json.loads(response.read().decode('utf-8'))
-    response.close()
-    response.release_conn()
-    
-    # Usar datos de BTC/USDT para reentrenamiento
-    btc_data = processed_data.get('BTC_USDT', [])
-    if not btc_data:
-        print("⚠️ No BTC data available for retraining")
-        return None
-    
-    df = pd.DataFrame(btc_data)
-    df['timestamp'] = pd.to_datetime(df['timestamp'])
-    
-    print(f"📊 Training data shape: {df.shape}")
-    
-    # Entrenar modelo (versión simplificada para Airflow)
-    with mlflow.start_run():
-        mlflow.log_param("retrain_date", context['ds'])
-        mlflow.log_param("data_points", len(df))
-        mlflow.log_param("symbols", list(processed_data.keys()))
-        
-        # Aquí iría el código de entrenamiento del modelo
-        # Por simplicidad, simulamos métricas
-        import random
-        import time
-        
-        print("⏳ Training model...")
-        time.sleep(10)  # Simular entrenamiento
-        
-        # Métricas simuladas
-        mse = random.uniform(0.001, 0.005)
-        mae = random.uniform(0.01, 0.03)
-        
-        mlflow.log_metric("mse", mse)
-        mlflow.log_metric("mae", mae)
-        mlflow.log_metric("training_samples", len(df))
-        
-        # Log modelo ficticio (en producción sería el modelo real)
-        import pickle
-        dummy_model = {'type': 'lstm', 'trained_at': datetime.now().isoformat()}
-        
-        with open('/tmp/model.pkl', 'wb') as f:
-            pickle.dump(dummy_model, f)
-        
-        mlflow.log_artifact('/tmp/model.pkl', 'model')
-        
-        run_id = mlflow.active_run().info.run_id
-        print(f"✅ Model training completed. Run ID: {run_id}")
-        
-        return {
-            'run_id': run_id,
-            'mse': mse,
-            'mae': mae,
-            'training_date': context['ds']
-        }
+    try:
+        # 1. Configurar el entorno de MLflow
+        if not setup_mlflow_environment():
+            raise Exception("No se pudo configurar el entorno de MLflow.")
+
+        # 2. Iniciar la ejecución de MLflow desde el DAG (¡SOLO AQUÍ!)
+        with mlflow.start_run() as run:
+            print(f"MLflow Run ID: {run.info.run_id}")
+
+            # 3. Llamar al pipeline de entrenamiento de tu modelo
+            #    Ahora, tu función train_model_pipeline YA NO debe tener un with mlflow.start_run()
+            trained_model, mse, mae = train_model_pipeline("BTC/USDT", days_back=60)
+
+            # 4. Registrar el modelo en el Model Registry de MLflow
+            #    Se usa el URI de la run actual para la versión
+            model_info = mlflow.tensorflow.log_model(
+                tf_saved_model_dir=trained_model,
+                artifact_path="model",
+                signature=infer_signature(X_train_seq, y_pred_scaled) # Reemplaza con tus variables
+            )
+            
+            model_version = mlflow.register_model(
+                model_uri=model_info.model_uri,
+                name="crypto-volatility-lstm"
+            )
+
+            print(f"✅ Modelo entrenado y registrado exitosamente como versión: {model_version.version}")
+
+            return {
+                'run_id': run.info.run_id,
+                'model_version': model_version.version,
+            }
+
+    except Exception as e:
+        print(f"❌ Error durante el entrenamiento y registro del modelo: {e}")
+        # Lanza la excepción para que Airflow marque la tarea como 'Failed'
+        raise e
 
 def deploy_model(**context):
     """Task 5: Deploy del modelo a producción"""
@@ -355,8 +333,8 @@ def deploy_model(**context):
         
         model_uri = f"runs:/{run_id}/model"
         
-        # En un entorno real, aquí haríamos:
-        # mlflow.register_model(model_uri, model_name)
+        # Registrar el modelo en el Model Registry de MLflow
+        mlflow.register_model(model_uri, model_name)
         
         print(f"✅ Model deployed successfully. Run ID: {run_id}")
         

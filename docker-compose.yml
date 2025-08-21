@@ -1,5 +1,5 @@
 services:
-  # === EXISTING SERVICES ===
+  # === SERVICIOS EXISTENTES ===
   api:
     build: ./api
     ports:
@@ -13,6 +13,18 @@ services:
       - MINIO_ENDPOINT=minio:9000
       - MINIO_ACCESS_KEY=minioadmin
       - MINIO_SECRET_KEY=minioadmin123
+      - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
+      - AWS_ACCESS_KEY_ID=minioadmin
+      - AWS_SECRET_ACCESS_KEY=minioadmin123
+    command: >
+      bash -c "
+        echo 'Waiting for MLflow to be ready...';
+        while ! curl -s http://mlflow:5000/health > /dev/null; do
+          sleep 2;
+        done;
+        echo 'MLflow is up. Starting API...';
+        exec uvicorn app:app --host 0.0.0.0 --port 8800 --reload
+      "
     depends_on:
       - postgres
       - mlflow
@@ -20,7 +32,7 @@ services:
     networks:
       mlops-network:
 
-  # === DATABASE ===
+  # === BASE DE DATOS ===
   postgres:
     image: postgres:13
     environment:
@@ -48,6 +60,7 @@ services:
     depends_on:
       - postgres
       - minio
+      - create_buckets # Nuevo: Depende de que el bucket se haya creado
     restart: unless-stopped
     networks:
       mlops-network:
@@ -67,10 +80,26 @@ services:
     networks:
       mlops-network:
 
+  # === NUEVO SERVICIO PARA CREAR BUCKETS ===
+  create_buckets:
+    image: minio/mc
+    depends_on:
+      - minio
+    entrypoint: /bin/sh
+    command: >
+      -c "
+      /usr/bin/mc alias set myminio http://minio:9000 minioadmin minioadmin123 &&
+      /usr/bin/mc ls myminio/mlflow || /usr/bin/mc mb myminio/mlflow
+      "
+    restart: "no"
+    networks:
+      mlops-network:
+
   # === AIRFLOW ===
   airflow-init:
     build: ./airflow
     environment:
+      - _PIP_ADDITIONAL_REQUIREMENTS=''
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://mlops:mlops123@postgres:5432/airflow
       - AIRFLOW__CORE__FERNET_KEY=YlCImzjge_TeZc5FVOyxN1yMM5JziWNF3gULEUqXMaU=
@@ -100,6 +129,9 @@ services:
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://mlops:mlops123@postgres:5432/airflow
       - AIRFLOW__CORE__FERNET_KEY=YlCImzjge_TeZc5FVOyxN1yMM5JziWNF3gULEUqXMaU=
       - AIRFLOW__WEBSERVER__SECRET_KEY=YlCImzjge_TeZc5FVOyxN1yMM5JziWNF3gULEUqXMaU=
+      - AWS_ACCESS_KEY_ID=minioadmin
+      - AWS_SECRET_ACCESS_KEY=minioadmin123
+      - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
     volumes:
       - ./airflow/dags:/opt/airflow/dags
       - ./airflow/logs:/opt/airflow/logs
@@ -119,6 +151,9 @@ services:
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://mlops:mlops123@postgres:5432/airflow
       - AIRFLOW__CORE__FERNET_KEY=YlCImzjge_TeZc5FVOyxN1yMM5JziWNF3gULEUqXMaU=
+      - AWS_ACCESS_KEY_ID=minioadmin
+      - AWS_SECRET_ACCESS_KEY=minioadmin123
+      - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
     volumes:
       - ./airflow/dags:/opt/airflow/dags
       - ./airflow/logs:/opt/airflow/logs
@@ -132,7 +167,7 @@ services:
       mlops-network:
     command: airflow scheduler
 
-  # === KAFKA ECOSYSTEM ===
+  # === ECOSISTEMA KAFKA ===
   zookeeper:
     image: confluentinc/cp-zookeeper:7.4.0
     environment:
@@ -169,7 +204,7 @@ services:
     networks:
       mlops-network:
 
-  # === GRPC SERVER ===
+  # === SERVIDOR GRPC ===
   grpc-server:
     build: ./grpc
     ports:
@@ -183,7 +218,7 @@ services:
     networks:
       mlops-network:
 
-  # === GRAPHQL SERVER ===
+  # === SERVIDOR GRAPHQL ===
   graphql-server:
     build: ./graphql
     ports:
@@ -197,7 +232,7 @@ services:
     networks:
       mlops-network:
 
-  # === STREAMING SERVICES ===
+  # === SERVICIOS DE STREAMING ===
   crypto-producer:
     build: ./streaming/producer
     environment:
@@ -223,8 +258,8 @@ services:
     restart: unless-stopped
 
 volumes:
-  postgres_data:
-  minio_data:
+  postgres_data: {}
+  minio_data: {}
 
 networks:
   mlops-network:

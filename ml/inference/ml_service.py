@@ -1,198 +1,108 @@
 """
-Servicio de inferencia ML para integrar con FastAPI
+ML Service para carga y uso de modelos de MLflow
 """
-import os
-import sys
-import mlflow
-import pandas as pd
-import numpy as np
-from typing import Dict, Any, Optional
 import logging
-from datetime import datetime
-
-# Agregar path para importar el modelo
-sys.path.append('/app/ml/models')
+import os
+from typing import Optional, Dict, Any
+import pandas as pd
 from volatility_lstm import VolatilityLSTM
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-class MLInferenceService:
+class MLService:
     def __init__(self):
-        self.model = None
-        self.model_version = None
-        self.model_name = "volatility_lstm"
-        self.mlflow_tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "http://mlflow:5000")
+        self.model: Optional[VolatilityLSTM] = None
+        self.model_name = "crypto-predictor"
+        self.model_stage = "Production"
+        self.is_loaded = False
         
-        # Configurar MLflow
-        mlflow.set_tracking_uri(self.mlflow_tracking_uri)
-        
-        # Cargar modelo al inicializar
-        self.load_latest_model()
-    
-    def load_latest_model(self) -> bool:
-        """Cargar el modelo más reciente desde MLflow"""
+    def load_model(self) -> bool:
+        """
+        Carga el modelo desde MLflow
+        """
         try:
-            # Buscar el modelo más reciente
-            client = mlflow.tracking.MlflowClient()
-            
-            # Intentar obtener el modelo de producción
-            try:
-                model_version = client.get_latest_versions(
-                    self.model_name, 
-                    stages=["Production"]
-                )[0]
-                logger.info(f"Loading production model version: {model_version.version}")
-            except:
-                # Si no hay modelo en producción, usar el más reciente
-                try:
-                    model_version = client.get_latest_versions(self.model_name)[0]
-                    logger.info(f"Loading latest model version: {model_version.version}")
-                except:
-                    logger.warning("No registered model found, will try to load from runs")
-                    return self._load_from_latest_run()
-            
-            # Construir URI del modelo
-            model_uri = f"models:/{self.model_name}/{model_version.version}"
-            
-            # Cargar modelo
-            self.model = VolatilityLSTM()
-            self.model.load_model(model_uri)
-            self.model_version = model_version.version
-            
-            logger.info(f"Successfully loaded model version {self.model_version}")
-            return True
-            
-        except Exception as e:
-            logger.error(f"Error loading model: {e}")
-            return False
-    
-    def _load_from_latest_run(self) -> bool:
-        """Cargar modelo desde el run más reciente"""
-        try:
-            # Buscar experimento
-            experiment = mlflow.get_experiment_by_name("crypto_volatility_prediction")
-            if not experiment:
-                logger.error("Experiment 'crypto_volatility_prediction' not found")
-                return False
-            
-            # Buscar runs del experimento
-            client = mlflow.tracking.MlflowClient()
-            runs = client.search_runs(
-                experiment_ids=[experiment.experiment_id],
-                order_by=["start_time DESC"],
-                max_results=1
-            )
-            
-            if not runs:
-                logger.error("No runs found in experiment")
-                return False
-            
-            # Cargar modelo del run más reciente
-            run_id = runs[0].info.run_id
-            model_uri = f"runs:/{run_id}/model"
+            model_uri = f"models:/{self.model_name}/{self.model_stage}"
+            logger.info(f"[MLService] Cargando modelo desde {model_uri}")
             
             self.model = VolatilityLSTM()
-            self.model.load_model(model_uri)
-            self.model_version = f"run-{run_id[:8]}"
+            success = self.model.load_model_from_mlflow(model_uri)
             
-            logger.info(f"Successfully loaded model from run: {run_id}")
-            return True
-            
-        except Exception as e:
-            logger.error(f"Error loading model from run: {e}")
-            return False
-    
-    def predict_volatility(self, ohlcv_data: pd.DataFrame) -> Dict[str, Any]:
-        """
-        Predecir volatilidad usando el modelo ML
-        
-        Args:
-            ohlcv_data: DataFrame con columnas [open, high, low, close, volume]
-        
-        Returns:
-            Diccionario con predicción y metadata
-        """
-        if self.model is None:
-            return {
-                "error": "Model not loaded",
-                "prediction": None,
-                "confidence": 0.0,
-                "model_version": None
-            }
-        
-        try:
-            # Realizar predicción
-            predicted_vol = self.model.predict(ohlcv_data)
-            
-            if predicted_vol is None:
-                return {
-                    "error": "Insufficient data for prediction",
-                    "prediction": None,
-                    "confidence": 0.0,
-                    "model_version": self.model_version
-                }
-            
-            # Calcular volatilidad actual para comparación
-            returns = ohlcv_data['close'].pct_change()
-            current_vol = returns.rolling(window=24).std().iloc[-1]
-            
-            # Estimar confidence basado en la diferencia con volatilidad histórica
-            vol_diff = abs(predicted_vol - current_vol) if pd.notna(current_vol) else 0
-            confidence = max(0.1, 1.0 - min(vol_diff * 10, 0.9))  # Heurística simple
-            
-            # Clasificar régimen de volatilidad predicho
-            if predicted_vol < 0.01:
-                vol_regime = "calm"
-                risk_level = "low"
-            elif predicted_vol < 0.03:
-                vol_regime = "normal"
-                risk_level = "medium"
+            if success:
+                self.is_loaded = True
+                logger.info("[MLService] ✅ Modelo cargado exitosamente")
+                return True
             else:
-                vol_regime = "turbulent"
-                risk_level = "high"
-            
-            return {
-                "prediction": float(predicted_vol),
-                "current_volatility": float(current_vol) if pd.notna(current_vol) else None,
-                "volatility_regime": vol_regime,
-                "risk_level": risk_level,
-                "confidence": float(confidence),
-                "model_version": self.model_version,
-                "prediction_timestamp": datetime.now().isoformat(),
-                "error": None
-            }
-            
+                logger.error("[MLService] ❌ Error cargando modelo")
+                return False
+                
         except Exception as e:
-            logger.error(f"Error in prediction: {e}")
-            return {
-                "error": f"Prediction failed: {str(e)}",
-                "prediction": None,
-                "confidence": 0.0,
-                "model_version": self.model_version
-            }
+            logger.error(f"[MLService] ❌ Error cargando modelo: {e}")
+            self.is_loaded = False
+            return False
     
     def get_model_info(self) -> Dict[str, Any]:
-        """Obtener información del modelo cargado"""
-        return {
-            "model_loaded": self.model is not None,
-            "model_version": self.model_version,
-            "model_name": self.model_name,
-            "mlflow_uri": self.mlflow_tracking_uri,
-            "sequence_length": getattr(self.model, 'sequence_length', None) if self.model else None
-        }
-    
-    def reload_model(self) -> Dict[str, Any]:
-        """Recargar el modelo desde MLflow"""
-        old_version = self.model_version
-        success = self.load_latest_model()
+        """
+        Obtiene información del modelo actual
+        """
+        if not self.is_loaded or self.model is None:
+            return {
+                "status": "not_loaded",
+                "model_name": self.model_name,
+                "model_stage": self.model_stage,
+                "is_loaded": False,
+                "message": "Modelo no cargado"
+            }
         
-        return {
-            "success": success,
-            "old_version": old_version,
-            "new_version": self.model_version,
-            "message": "Model reloaded successfully" if success else "Failed to reload model"
-        }
+        try:
+            model_info = self.model.get_model_info()
+            return {
+                "status": "loaded",
+                "model_name": self.model_name,
+                "model_stage": self.model_stage,
+                "is_loaded": True,
+                **model_info
+            }
+        except Exception as e:
+            logger.error(f"[MLService] Error obteniendo info del modelo: {e}")
+            return {
+                "status": "error",
+                "model_name": self.model_name,
+                "model_stage": self.model_stage,
+                "is_loaded": self.is_loaded,
+                "message": f"Error obteniendo información: {e}"
+            }
+    
+    def predict(self, df: pd.DataFrame) -> Optional[float]:
+        """
+        Realiza predicción usando el modelo cargado
+        """
+        if not self.is_loaded or self.model is None:
+            logger.error("[MLService] Modelo no está cargado para predicción")
+            return None
+        
+        try:
+            prediction = self.model.predict(df)
+            logger.info(f"[MLService] Predicción realizada: {prediction}")
+            return prediction
+        except Exception as e:
+            logger.error(f"[MLService] Error en predicción: {e}")
+            return None
+    
+    def is_model_available(self) -> bool:
+        """
+        Verifica si el modelo está disponible y listo
+        """
+        return self.is_loaded and self.model is not None
+    
+    def reload_model(self) -> bool:
+        """
+        Recarga el modelo desde MLflow
+        """
+        logger.info("[MLService] Recargando modelo...")
+        self.is_loaded = False
+        self.model = None
+        return self.load_model()
 
-# Instancia global del servicio
-ml_service = MLInferenceService()
+# Instancia global del servicio ML
+ml_service = MLService()
+

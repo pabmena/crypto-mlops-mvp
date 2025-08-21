@@ -1,0 +1,19 @@
+[2025-08-21T19:04:08.685+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: crypto_ml_pipeline.validate_data_quality manual__2025-08-21T19:03:59.030427+00:00 [queued]>
+[2025-08-21T19:04:08.688+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: crypto_ml_pipeline.validate_data_quality manual__2025-08-21T19:03:59.030427+00:00 [queued]>
+[2025-08-21T19:04:08.688+0000] {taskinstance.py:1359} INFO - Starting attempt 1 of 2
+[2025-08-21T19:04:08.693+0000] {taskinstance.py:1380} INFO - Executing <Task(PythonOperator): validate_data_quality> on 2025-08-21 19:03:59.030427+00:00
+[2025-08-21T19:04:08.696+0000] {standard_task_runner.py:57} INFO - Started process 686 to run task
+[2025-08-21T19:04:08.698+0000] {standard_task_runner.py:84} INFO - Running: ['airflow', 'tasks', 'run', 'crypto_ml_pipeline', 'validate_data_quality', 'manual__2025-08-21T19:03:59.030427+00:00', '--job-id', '55', '--raw', '--subdir', 'DAGS_FOLDER/crypto_ml_pipeline.py', '--cfg-path', '/tmp/tmpobnxa03z']
+[2025-08-21T19:04:08.699+0000] {standard_task_runner.py:85} INFO - Job 55: Subtask validate_data_quality
+[2025-08-21T19:04:08.716+0000] {task_command.py:415} INFO - Running <TaskInstance: crypto_ml_pipeline.validate_data_quality manual__2025-08-21T19:03:59.030427+00:00 [running]> on host c7ecf678507a
+[2025-08-21T19:04:08.742+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='crypto-mlops' AIRFLOW_CTX_DAG_ID='crypto_ml_pipeline' AIRFLOW_CTX_TASK_ID='validate_data_quality' AIRFLOW_CTX_EXECUTION_DATE='2025-08-21T19:03:59.030427+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-21T19:03:59.030427+00:00'
+[2025-08-21T19:04:08.743+0000] {logging_mixin.py:151} INFO - 🔍 Validating data quality...
+[2025-08-21T19:04:08.766+0000] {logging_mixin.py:151} INFO - ✅ Quality check PASSED for BTC_USDT
+[2025-08-21T19:04:08.768+0000] {logging_mixin.py:151} INFO - ✅ Quality check PASSED for ETH_USDT
+[2025-08-21T19:04:08.769+0000] {logging_mixin.py:151} INFO - ✅ Quality check PASSED for BNB_USDT
+[2025-08-21T19:04:08.771+0000] {logging_mixin.py:151} INFO - ✅ Quality check PASSED for ADA_USDT
+[2025-08-21T19:04:08.776+0000] {logging_mixin.py:151} INFO - 📊 Quality report saved: quality-reports/quality_report_2025-08-21.json
+[2025-08-21T19:04:08.777+0000] {python.py:194} INFO - Done. Returned value was: {'timestamp': '2025-08-21T19:04:08.763029', 'date': '2025-08-21', 'symbols_processed': 4, 'quality_checks': {'BTC_USDT': {'record_count': 929, 'missing_values': 0, 'duplicate_timestamps': 0, 'price_anomalies': 0, 'volume_anomalies': 0}, 'ETH_USDT': {'record_count': 929, 'missing_values': 0, 'duplicate_timestamps': 0, 'price_anomalies': 0, 'volume_anomalies': 0}, 'BNB_USDT': {'record_count': 929, 'missing_values': 0, 'duplicate_timestamps': 0, 'price_anomalies': 0, 'volume_anomalies': 3}, 'ADA_USDT': {'record_count': 929, 'missing_values': 0, 'duplicate_timestamps': 0, 'price_anomalies': 0, 'volume_anomalies': 2}}, 'passed': True}
+[2025-08-21T19:04:08.786+0000] {taskinstance.py:1398} INFO - Marking task as SUCCESS. dag_id=crypto_ml_pipeline, task_id=validate_data_quality, execution_date=20250821T190359, start_date=20250821T190408, end_date=20250821T190408
+[2025-08-21T19:04:08.797+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-08-21T19:04:08.808+0000] {taskinstance.py:2776} INFO - 1 downstream tasks scheduled from follow-on schedule check
