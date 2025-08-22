@@ -102,7 +102,7 @@ class VolatilityLSTM:
         logger.info(f"Iniciando entrenamiento del modelo: {registered_model_name}")
         
         try:
-            with mlflow.start_run():
+            
                 # Log parámetros
                 mlflow.log_param("sequence_length", self.sequence_length)
                 mlflow.log_param("lstm_units", self.lstm_units)

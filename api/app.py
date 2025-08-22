@@ -19,7 +19,7 @@ from pydantic import BaseModel, Field
 sys.path.append('/app')
 sys.path.append('/app/ml/inference')
 
-# Importar servicios ML (opcional)
+# Importar servicios ML
 try:
     from ml_service import ml_service
     ML_AVAILABLE = True
@@ -46,6 +46,21 @@ app.state.metrics = {
     "last_ml_prediction_at": None,
     "ml_available": ML_AVAILABLE,
 }
+
+# -----------------------------------------------------------------------------
+# Evento de inicio: Cargar el modelo aquí
+# -----------------------------------------------------------------------------
+@app.on_event("startup")
+def startup_event():
+    print("🚀 Crypto MLOps MVP - Integrated Starting...")
+    print(f"📁 Data directory: {DATA_DIR}")
+    print(f"🤖 ML Available: {ML_AVAILABLE}")
+    
+    # Llama al método de carga del servicio de ML al iniciar la aplicación
+    if ML_AVAILABLE:
+        ml_service.load_model()
+    
+    print("✅ Application startup complete.")
 
 # -----------------------------------------------------------------------------
 # Persistencia: /app/data (ORIGINAL + ML)
@@ -325,7 +340,7 @@ def ml_signal(inp: MLSignalIn = Body(...)):
         df = get_crypto_data(inp.symbol, inp.exchange, inp.timeframe, inp.limit)
         
         # Predicción ML
-        ml_prediction = ml_service.predict_volatility(df)
+        ml_prediction = ml_service.predict(df)
         
         # Respuesta base
         response_data = {
@@ -412,7 +427,7 @@ def signals_compare(
     
     # Generar predicciones
     heuristic_features = compute_features(df_heuristic)
-    ml_prediction = ml_service.predict_volatility(df_ml)
+    ml_prediction = ml_service.predict(df_ml)
     
     return {
         "symbol": normalize_symbol(symbol),
@@ -524,7 +539,6 @@ def home():
     </div>
   </div>
 
-  <!-- Tabs Navigation -->
   <div class="tabs">
     <button class="tab active" onclick="showTab('signals')">📊 Signals</button>
     <button class="tab" onclick="showTab('ml')">🤖 ML Predictions</button>
@@ -533,7 +547,6 @@ def home():
     <button class="tab" onclick="showTab('history')">📋 History</button>
   </div>
 
-  <!-- Tab: Signals (Original) -->
   <div id="tab-signals" class="tab-content active">
     <div class="row">
       <div class="card">
@@ -593,7 +606,6 @@ def home():
     </div>
   </div>
 
-  <!-- Tab: ML Predictions -->
   <div id="tab-ml" class="tab-content">
     <div class="row">
       <div class="card">
@@ -629,7 +641,6 @@ def home():
     </div>
   </div>
 
-  <!-- Tab: Compare -->
   <div id="tab-compare" class="tab-content">
     <div class="card">
       <h3>⚖️ Heuristic vs ML Comparison</h3>
@@ -661,7 +672,6 @@ def home():
     </div>
   </div>
 
-  <!-- Tab: OHLCV Data -->
   <div id="tab-data" class="tab-content">
     <div class="card">
       <h3>📈 OHLCV Data (last 50 rows)</h3>
@@ -674,7 +684,6 @@ def home():
     </div>
   </div>
 
-  <!-- Tab: History -->
   <div id="tab-history" class="tab-content">
     <div class="row">
       <div class="card">

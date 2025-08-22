@@ -9,7 +9,7 @@ pytest==7.4.0
 
 # New ML dependencies
 mlflow==2.7.1
-tensorflow
+tensorflow==2.16.1  # Versión de TensorFlow compatible con la API
 scikit-learn==1.3.0
 joblib==1.3.2
 #tensorflow-cpu-aws
@@ -26,3 +26,4 @@ minio==7.1.15
 # Additional utilities
 python-multipart==0.0.6
 aiofiles==23.1.0
+torch

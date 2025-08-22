@@ -1,0 +1,19 @@
+[2025-08-22T03:35:03.869+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: crypto_ml_pipeline.extract_crypto_data manual__2025-08-22T03:34:59.450025+00:00 [queued]>
+[2025-08-22T03:35:03.874+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: crypto_ml_pipeline.extract_crypto_data manual__2025-08-22T03:34:59.450025+00:00 [queued]>
+[2025-08-22T03:35:03.875+0000] {taskinstance.py:1359} INFO - Starting attempt 1 of 2
+[2025-08-22T03:35:03.883+0000] {taskinstance.py:1380} INFO - Executing <Task(PythonOperator): extract_crypto_data> on 2025-08-22 03:34:59.450025+00:00
+[2025-08-22T03:35:03.890+0000] {standard_task_runner.py:57} INFO - Started process 247 to run task
+[2025-08-22T03:35:03.894+0000] {standard_task_runner.py:84} INFO - Running: ['airflow', 'tasks', 'run', 'crypto_ml_pipeline', 'extract_crypto_data', 'manual__2025-08-22T03:34:59.450025+00:00', '--job-id', '5', '--raw', '--subdir', 'DAGS_FOLDER/crypto_ml_pipeline.py', '--cfg-path', '/tmp/tmpd7qtxteh']
+[2025-08-22T03:35:03.896+0000] {standard_task_runner.py:85} INFO - Job 5: Subtask extract_crypto_data
+[2025-08-22T03:35:03.933+0000] {task_command.py:415} INFO - Running <TaskInstance: crypto_ml_pipeline.extract_crypto_data manual__2025-08-22T03:34:59.450025+00:00 [running]> on host 1dcd02618b5d
+[2025-08-22T03:35:03.973+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='crypto-mlops' AIRFLOW_CTX_DAG_ID='crypto_ml_pipeline' AIRFLOW_CTX_TASK_ID='extract_crypto_data' AIRFLOW_CTX_EXECUTION_DATE='2025-08-22T03:34:59.450025+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-22T03:34:59.450025+00:00'
+[2025-08-22T03:35:03.975+0000] {logging_mixin.py:151} INFO - 🔄 Extracting crypto data...
+[2025-08-22T03:35:08.208+0000] {logging_mixin.py:151} INFO - ✅ Extracted 1000 records for BTC/USDT
+[2025-08-22T03:35:08.541+0000] {logging_mixin.py:151} INFO - ✅ Extracted 1000 records for ETH/USDT
+[2025-08-22T03:35:08.891+0000] {logging_mixin.py:151} INFO - ✅ Extracted 1000 records for BNB/USDT
+[2025-08-22T03:35:09.230+0000] {logging_mixin.py:151} INFO - ✅ Extracted 1000 records for ADA/USDT
+[2025-08-22T03:35:09.288+0000] {logging_mixin.py:151} INFO - 📁 Data uploaded to MinIO: raw-data/crypto_data_2025-08-22.json
+[2025-08-22T03:35:09.341+0000] {python.py:194} INFO - Done. Returned value was: raw-data/crypto_data_2025-08-22.json
+[2025-08-22T03:35:09.358+0000] {taskinstance.py:1398} INFO - Marking task as SUCCESS. dag_id=crypto_ml_pipeline, task_id=extract_crypto_data, execution_date=20250822T033459, start_date=20250822T033503, end_date=20250822T033509
+[2025-08-22T03:35:09.392+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-08-22T03:35:09.424+0000] {taskinstance.py:2776} INFO - 1 downstream tasks scheduled from follow-on schedule check
