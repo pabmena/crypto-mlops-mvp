@@ -48,19 +48,8 @@ app.state.metrics = {
 }
 
 # -----------------------------------------------------------------------------
-# Evento de inicio: Cargar el modelo aquí
+# Evento de inicio (se maneja en el bloque de startup al final)
 # -----------------------------------------------------------------------------
-@app.on_event("startup")
-def startup_event():
-    print("🚀 Crypto MLOps MVP - Integrated Starting...")
-    print(f"📁 Data directory: {DATA_DIR}")
-    print(f"🤖 ML Available: {ML_AVAILABLE}")
-    
-    # Llama al método de carga del servicio de ML al iniciar la aplicación
-    if ML_AVAILABLE:
-        ml_service.load_model()
-    
-    print("✅ Application startup complete.")
 
 # -----------------------------------------------------------------------------
 # Persistencia: /app/data (ORIGINAL + ML)
@@ -372,6 +361,13 @@ def ml_signal(inp: MLSignalIn = Body(...)):
         raise HTTPException(status_code=503, detail="ML service not available")
     
     try:
+        # Cargar el modelo si no está cargado
+        try:
+            if hasattr(ml_service, 'model_loaded') and not ml_service.model_loaded:
+                ml_service.load_model()
+        except Exception as e:
+            print(f"[ml-signal][WARN] Could not ensure model load: {e}")
+        
         # Obtener datos en formato ML
         df = get_crypto_data(inp.symbol, inp.exchange, inp.timeframe, inp.limit)
         
@@ -755,8 +751,13 @@ def home():
     document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
     
     // Show selected tab
-    document.getElementById(`tab-${tabName}`).classList.add('active');
-    event.target.classList.add('active');
+    const content = document.getElementById(`tab-${tabName}`);
+    if (content) content.classList.add('active');
+    // Activate corresponding tab button by index
+    const indexMap = { signals: 0, ml: 1, compare: 2, data: 3, history: 4 };
+    const idx = indexMap[tabName];
+    const tabs = document.querySelectorAll('.tabs .tab');
+    if (idx != null && tabs[idx]) tabs[idx].classList.add('active');
   }
 
   // === UTILITY FUNCTIONS ===
@@ -906,6 +907,7 @@ def home():
     });
     
     renderMLSignal(sig);
+    return sig;
   }
 
   async function runComparison() {
@@ -988,6 +990,41 @@ def home():
 
     // Show full prediction
     $('mlPredExplain').innerHTML = `<pre>${JSON.stringify(pred, null, 2)}</pre>`;
+  }
+
+  function renderCurrentSignalFromML(sig) {
+    const pred = sig.ml_prediction || {};
+    const predictedVol = Number(pred.prediction || 0);
+    const approxRisk = pred.risk_level
+      ? (pred.risk_level === 'high' ? 0.8 : (pred.risk_level === 'medium' ? 0.5 : 0.2))
+      : (predictedVol < 0.005 ? 0.2 : (predictedVol < 0.015 ? 0.5 : 0.8));
+
+    $('sigMeta').innerHTML = `
+      <b>Symbol:</b> ${sig.symbol} &nbsp;&nbsp; 
+      <b>Method:</b> ML<br/>
+      <b>Pred vol:</b> ${predictedVol.toFixed(6)} &nbsp;&nbsp; 
+      <b>Regime:</b> ${pred.volatility_regime || '—'}
+    `;
+
+    const rb = riskBand(approxRisk);
+    const rP = $('riskPill');
+    rP.className = `pill ${rb.cls}`;
+    rP.innerHTML = `<span class="dot" style="background:${rb.dot}"></span>
+                    Risk ${rb.label} (${approxRisk.toFixed(2)})`;
+
+    const vb = volBand(pred.volatility_regime);
+    const vP = $('volPill');
+    vP.className = `pill ${vb.cls}`;
+    vP.innerHTML = `<span class="dot" style="background:${vb.dot}"></span>
+                    Vol ${vb.text}`;
+
+    const mb = methodBand('ml');
+    const mP = $('methodPill');
+    mP.className = `pill ${mb.cls}`;
+    mP.innerHTML = `<span class="dot" style="background:${mb.dot}"></span>
+                    ${mb.text}`;
+
+    $('sigExplain').innerHTML = `<pre>${JSON.stringify(pred, null, 2)}</pre>`;
   }
 
   function renderComparison(comp) {
@@ -1089,7 +1126,13 @@ def home():
 
   $('btnML').addEventListener('click', async () => {
     try {
-      await runMLSignal();
+      const sig = await runMLSignal();
+      try {
+        renderCurrentSignalFromML(sig);
+      } catch (err) {
+        console.warn('ML render error:', err);
+      }
+      await refreshMLHistory();
     } catch (e) {
       alert(`ML Error: ${e.message}`);
     }
@@ -1158,6 +1201,9 @@ async def startup_event():
     
     if ML_AVAILABLE:
         try:
+            if hasattr(ml_service, 'model_loaded') and not ml_service.model_loaded:
+                print("🔄 Loading ML model on startup (safety net)...")
+                ml_service.load_model()
             model_info = ml_service.get_model_info()
             print(f"🧠 ML Model loaded: {model_info['model_loaded']}")
             print(f"📊 Model version: {model_info.get('model_version', 'unknown')}")
