@@ -33,9 +33,8 @@
   - *PostgreSQL*: backend de MLflow (runs/metrics/params) y base de Airflow.
   - *MinIO (S3)*: almacenamiento de artefactos de MLflow (modelos, scalers, etc.).
   - Archivos locales JSONL para historiales simples de señales/predicciones en la API.
-
-En conjunto, Airflow coordina los workflows batch, MLflow versiona y sirve modelos con artefactos en MinIO, FastAPI sirve predicciones y la UI, y Kafka muestra la variante streaming de ingesta y scoring en tiempo real, con la opción de conectarlo a la UI vía FastAPI si se quiere visualización live.
----
+ 
+En conjunto, Airflow coordina los workflows batch, MLFlow versiona y sirve modelos con artefactos en MinIO, FastApi sirve predicciones y la UI, y Kafka muestra la variante streaming de ingesta y scoring en tiempo real, con la opción de conectarla a la UI via FastApi si se quiere visualización live.
 
 ## 🏗️ Arquitectura del Sistema
 
