@@ -70,7 +70,7 @@ setup-buckets: ## Create MinIO buckets
 	docker-compose exec -T minio mc mb local/quality-reports || true
 	@echo "$(GREEN)✅ MinIO buckets created$(NC)"
 
-setup: setup-env up setup-buckets ## Complete setup from scratch
+setup: setup-env clean up setup-airflow setup-buckets train-model ## Complete setup from scratch
 	@echo "$(GREEN)🎉 Complete setup finished!$(NC)"
 	@make dashboard-urls
 
@@ -104,6 +104,19 @@ dashboard-urls: ## Show all dashboard URLs
 	@echo "  make train-model    - Train ML model"
 	@echo "  make test-apis      - Test all API endpoints"
 	@echo ""
+
+setup-airflow: ## Initialize Airflow DB and create default user
+	@echo "$(GREEN)⚙️ Setting up Airflow...$(NC)"
+	docker-compose run --rm airflow-webserver airflow db init
+	docker-compose run --rm airflow-webserver airflow users create \
+	    --username admin \
+	    --firstname Admin \
+	    --lastname User \
+	    --role Admin \
+	    --email admin@example.com \
+	    --password admin || true
+	docker-compose restart airflow-webserver airflow-scheduler
+	@echo "$(GREEN)✅ Airflow initialized$(NC)"
 
 check-health: ## Check health of all services
 	@echo "$(GREEN)🏥 Checking service health...$(NC)"
