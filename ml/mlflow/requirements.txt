@@ -1,4 +1,4 @@
-mlflow==2.7.1
+mlflow==2.13.0
 psycopg2-binary==2.9.7
 boto3==1.28.25
 tensorflow==2.16.1 

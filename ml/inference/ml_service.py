@@ -86,39 +86,51 @@ class MLService:
 
     def predict(self, df: pd.DataFrame) -> dict:
         """
-        Realiza una predicción utilizando el modelo cargado.
+        Realiza una predicción utilizando el modelo cargado (LSTM 3D input).
         """
         if not self.model_loaded or self.model is None:
             print("[MLService] Modelo no está cargado para predicción")
             return {"error": "Modelo no cargado"}
-        
+
         try:
-            # Asegurar que el DataFrame tenga las columnas correctas
-            df_features = df[FEATURE_COLUMNS]
-            
-            # El modelo MLflow espera un DataFrame
-            prediction_df = pd.DataFrame(df_features.tail(1), columns=FEATURE_COLUMNS)
-            
+            # Columnas que realmente entran al LSTM
+            LSTM_FEATURE_COLUMNS = ['returns', 'volatility', 'sma_12', 'sma_48',
+                                    'volume_sma', 'rsi', 'bb_upper', 'bb_lower',
+                                    'open', 'high', 'low']
+            SEQUENCE_LENGTH = 48
+
+            # Verificar que hay suficientes filas
+            if len(df) < SEQUENCE_LENGTH:
+                return {"error": f"No hay suficientes filas en el DataFrame. Se necesitan {SEQUENCE_LENGTH}."}
+
+            # Seleccionar las columnas y las últimas SEQUENCE_LENGTH filas
+            df_seq = df[LSTM_FEATURE_COLUMNS].tail(SEQUENCE_LENGTH)
+
+            # Convertir a numpy array 3D (1, SEQUENCE_LENGTH, n_features)
+            seq_input = df_seq.to_numpy().reshape(1, SEQUENCE_LENGTH, len(LSTM_FEATURE_COLUMNS))
+
             # Realizar la predicción
-            prediction = self.model.predict(prediction_df)
+            prediction = self.model.predict(seq_input)
             predicted_volatility = float(prediction[0])
-            
-            # Calcular régimen de volatilidad basado en la predicción
+
+            # Calcular régimen de volatilidad
             if predicted_volatility < 0.005:
                 vol_regime = "calm"
             elif predicted_volatility < 0.015:
                 vol_regime = "normal"
             else:
                 vol_regime = "turbulent"
-            
+
             return {
                 "prediction": predicted_volatility,
                 "volatility_regime": vol_regime,
                 "model_version": self.model_version
             }
+
         except Exception as e:
             print(f"❌ Error durante la predicción: {e}")
             return {"error": f"Error en la predicción: {str(e)}"}
+
 
     def get_model_info(self) -> dict:
         """

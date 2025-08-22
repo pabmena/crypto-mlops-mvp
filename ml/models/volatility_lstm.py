@@ -203,9 +203,8 @@ class VolatilityLSTM:
                 # Log del modelo
                 model_info = mlflow.tensorflow.log_model(
                     model=self.model,
-                    artifact_path="model",
+                    artifact_path="model.keras",
                     signature=signature,
-                    keras_model_kwargs={"save_format": "h5"},
                     registered_model_name=registered_model_name
                 )
 
