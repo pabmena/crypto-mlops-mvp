@@ -1,0 +1,20 @@
+[2025-08-22T03:35:13.465+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: crypto_ml_pipeline.process_crypto_data manual__2025-08-22T03:34:59.450025+00:00 [queued]>
+[2025-08-22T03:35:13.470+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: crypto_ml_pipeline.process_crypto_data manual__2025-08-22T03:34:59.450025+00:00 [queued]>
+[2025-08-22T03:35:13.470+0000] {taskinstance.py:1359} INFO - Starting attempt 1 of 2
+[2025-08-22T03:35:13.479+0000] {taskinstance.py:1380} INFO - Executing <Task(PythonOperator): process_crypto_data> on 2025-08-22 03:34:59.450025+00:00
+[2025-08-22T03:35:13.488+0000] {standard_task_runner.py:57} INFO - Started process 283 to run task
+[2025-08-22T03:35:13.490+0000] {standard_task_runner.py:84} INFO - Running: ['airflow', 'tasks', 'run', 'crypto_ml_pipeline', 'process_crypto_data', 'manual__2025-08-22T03:34:59.450025+00:00', '--job-id', '6', '--raw', '--subdir', 'DAGS_FOLDER/crypto_ml_pipeline.py', '--cfg-path', '/tmp/tmpgqacei0e']
+[2025-08-22T03:35:13.494+0000] {standard_task_runner.py:85} INFO - Job 6: Subtask process_crypto_data
+[2025-08-22T03:35:13.519+0000] {task_command.py:415} INFO - Running <TaskInstance: crypto_ml_pipeline.process_crypto_data manual__2025-08-22T03:34:59.450025+00:00 [running]> on host 1dcd02618b5d
+[2025-08-22T03:35:13.562+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='crypto-mlops' AIRFLOW_CTX_DAG_ID='crypto_ml_pipeline' AIRFLOW_CTX_TASK_ID='process_crypto_data' AIRFLOW_CTX_EXECUTION_DATE='2025-08-22T03:34:59.450025+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-22T03:34:59.450025+00:00'
+[2025-08-22T03:35:13.563+0000] {logging_mixin.py:151} INFO - ⚙️ Processing crypto data...
+[2025-08-22T03:35:13.582+0000] {logging_mixin.py:151} INFO - 📥 Downloaded data from MinIO: 4 symbols
+[2025-08-22T03:35:13.601+0000] {logging_mixin.py:151} INFO - ✅ Processed 929 clean records for BTC_USDT
+[2025-08-22T03:35:13.608+0000] {logging_mixin.py:151} INFO - ✅ Processed 929 clean records for ETH_USDT
+[2025-08-22T03:35:13.614+0000] {logging_mixin.py:151} INFO - ✅ Processed 929 clean records for BNB_USDT
+[2025-08-22T03:35:13.620+0000] {logging_mixin.py:151} INFO - ✅ Processed 929 clean records for ADA_USDT
+[2025-08-22T03:35:13.697+0000] {logging_mixin.py:151} INFO - 📁 Processed data uploaded: processed-data/processed_crypto_2025-08-22.json
+[2025-08-22T03:35:13.698+0000] {python.py:194} INFO - Done. Returned value was: processed-data/processed_crypto_2025-08-22.json
+[2025-08-22T03:35:13.708+0000] {taskinstance.py:1398} INFO - Marking task as SUCCESS. dag_id=crypto_ml_pipeline, task_id=process_crypto_data, execution_date=20250822T033459, start_date=20250822T033513, end_date=20250822T033513
+[2025-08-22T03:35:13.752+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-08-22T03:35:13.766+0000] {taskinstance.py:2776} INFO - 1 downstream tasks scheduled from follow-on schedule check

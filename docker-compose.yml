@@ -1,13 +1,298 @@
 services:
+  # === SERVICIOS EXISTENTES ===
   api:
-    build:
-      context: ./api
-      dockerfile: Dockerfile
+    build: ./api
     ports:
-      - "${API_PORT:-8800}:8800"
-    environment:
-      - ENV=${ENV:-dev}
-    restart: unless-stopped
+      - "8800:8800"
     volumes:
-      - ./api:/app
       - ./data:/app/data
+      - ./ml:/app/ml
+      - ./scripts:/app/scripts
+    environment:
+      - PYTHONPATH=/app
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - MINIO_ENDPOINT=minio:9000
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin123
+      - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
+      - AWS_ACCESS_KEY_ID=minioadmin
+      - AWS_SECRET_ACCESS_KEY=minioadmin123
+    command: >
+      bash -c "
+        echo 'Waiting for MLflow to be ready...';
+        while ! curl -s http://mlflow:5000/health > /dev/null; do
+          sleep 2;
+        done;
+        echo 'MLflow is up. Starting API...';
+        exec uvicorn app:app --host 0.0.0.0 --port 8800 --reload
+      "
+    depends_on:
+      - postgres
+      - mlflow
+      - minio
+    networks:
+      mlops-network:
+
+  # === BASE DE DATOS ===
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: mlops
+      POSTGRES_USER: mlops
+      POSTGRES_PASSWORD: mlops123
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    ports:
+      - "5432:5432"
+    networks:
+      mlops-network:
+
+  # === MLFLOW ===
+  mlflow:
+    build: ./ml/mlflow
+    ports:
+      - "5000:5000"
+    environment:
+      - MLFLOW_BACKEND_STORE_URI=postgresql://mlops:mlops123@postgres:5432/mlflow
+      - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
+      - AWS_ACCESS_KEY_ID=minioadmin
+      - AWS_SECRET_ACCESS_KEY=minioadmin123
+    depends_on:
+      - postgres
+      - minio
+      - create_buckets # Nuevo: Depende de que el bucket se haya creado
+    restart: unless-stopped
+    networks:
+      mlops-network:
+
+  # === MINIO (S3 Compatible) ===
+  minio:
+    image: minio/minio:latest
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin123
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+    networks:
+      mlops-network:
+
+  # === NUEVO SERVICIO PARA CREAR BUCKETS ===
+  create_buckets:
+    image: minio/mc
+    depends_on:
+      - minio
+    entrypoint: /bin/sh
+    command: >
+      -c "
+      /usr/bin/mc alias set myminio http://minio:9000 minioadmin minioadmin123 &&
+      /usr/bin/mc ls myminio/mlflow || /usr/bin/mc mb myminio/mlflow
+      "
+    restart: "no"
+    networks:
+      mlops-network:
+
+  # === AIRFLOW ===
+  airflow-setup:
+    build: ./airflow
+    environment:
+      - _PIP_ADDITIONAL_REQUIREMENTS=''
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://mlops:mlops123@postgres:5432/airflow
+      - AIRFLOW__CORE__FERNET_KEY=YlCImzjge_TeZc5FVOyxN1yMM5JziWNF3gULEUqXMaU=
+      - AIRFLOW__WEBSERVER__SECRET_KEY=YlCImzjge_TeZc5FVOyxN1yMM5JziWNF3gULEUqXMaU=
+      - PYTHONPATH=/app
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - MINIO_ENDPOINT=minio:9000
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin123
+      - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
+      - AWS_ACCESS_KEY_ID=minioadmin
+      - AWS_SECRET_ACCESS_KEY=minioadmin123
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./airflow/plugins:/opt/airflow/plugins
+      - ./data:/opt/airflow/data
+      - ./ml:/opt/airflow/ml
+    depends_on:
+      - postgres
+    command: >
+      bash -c "
+        # Esperar a que la base de datos esté lista
+        # Usamos `pg_isready` para una verificación robusta
+        echo 'Esperando a que la base de datos de Airflow esté lista...';
+        while ! pg_isready -h postgres -p 5432 -U mlops; do
+          sleep 1;
+        done;
+        echo 'Base de datos de Airflow lista.';
+        
+        # Inicializar la base de datos
+        airflow db init &&
+
+        # Crear el usuario administrador
+        airflow users create --username admin --password admin --firstname Airflow --lastname Admin --role Admin --email admin@airflow.com || true
+      "
+    restart: "no" # Asegura que el contenedor no se reinicie automáticamente
+    networks:
+      mlops-network:
+
+  airflow-webserver:
+    build: ./airflow
+    ports:
+      - "8080:8080"
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://mlops:mlops123@postgres:5432/airflow
+      - AIRFLOW__CORE__FERNET_KEY=YlCImzjge_TeZc5FVOyxN1yMM5JziWNF3gULEUqXMaU=
+      - AIRFLOW__WEBSERVER__SECRET_KEY=YlCImzjge_TeZc5FVOyxN1yMM5JziWNF3gULEUqXMaU=
+      - AWS_ACCESS_KEY_ID=minioadmin
+      - AWS_SECRET_ACCESS_KEY=minioadmin123
+      - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
+      - PYTHONPATH=/app
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - MINIO_ENDPOINT=minio:9000
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin123
+      - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
+      - AWS_ACCESS_KEY_ID=minioadmin
+      - AWS_SECRET_ACCESS_KEY=minioadmin123
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./airflow/plugins:/opt/airflow/plugins
+      - ./data:/opt/airflow/data
+      - ./ml:/opt/airflow/ml
+    depends_on:
+      - airflow-setup # Asegura que la base de datos esté inicializada
+    networks:
+      mlops-network:
+    command: airflow webserver
+
+  airflow-scheduler:
+    build: ./airflow
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://mlops:mlops123@postgres:5432/airflow
+      - AIRFLOW__CORE__FERNET_KEY=YlCImzjge_TeZc5FVOyxN1yMM5JziWNF3gULEUqXMaU=
+      - AWS_ACCESS_KEY_ID=minioadmin
+      - AWS_SECRET_ACCESS_KEY=minioadmin123
+      - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
+      - PYTHONPATH=/app
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - MINIO_ENDPOINT=minio:9000
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin123
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./airflow/plugins:/opt/airflow/plugins
+      - ./data:/opt/airflow/data
+      - ./ml:/opt/airflow/ml
+    depends_on:
+      - airflow-setup # Asegura que la base de datos esté inicializada
+    networks:
+      mlops-network:
+    command: airflow scheduler
+
+  # === ECOSISTEMA KAFKA ===
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.0
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      mlops-network:
+
+  kafka:
+    image: confluentinc/cp-kafka:7.4.0
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://kafka:29092
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT_INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - zookeeper
+    networks:
+      mlops-network:
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    ports:
+      - "8088:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
+    depends_on:
+      - kafka
+    networks:
+      mlops-network:
+
+  # === SERVIDOR GRPC ===
+  grpc-server:
+    build: ./grpc
+    ports:
+      - "50051:50051"
+    environment:
+      - API_ENDPOINT=http://api:8800
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    depends_on:
+      - api
+      - mlflow
+    networks:
+      mlops-network:
+
+  # === SERVIDOR GRAPHQL ===
+  graphql-server:
+    build: ./graphql
+    ports:
+      - "4000:4000"
+    environment:
+      - API_ENDPOINT=http://api:8800
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    depends_on:
+      - api
+      - mlflow
+    networks:
+      mlops-network:
+
+  # === SERVICIOS DE STREAMING ===
+  crypto-producer:
+    build: ./streaming/producer
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - KAFKA_TOPIC=crypto-prices
+    depends_on:
+      - kafka
+    networks:
+      mlops-network:
+    restart: unless-stopped
+
+  crypto-consumer:
+    build: ./streaming/consumer
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - KAFKA_TOPIC=crypto-prices
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    depends_on:
+      - kafka
+      - mlflow
+    networks:
+      mlops-network:
+    restart: unless-stopped
+
+volumes:
+  postgres_data: {}
+  minio_data: {}
+
+networks:
+  mlops-network:
+    driver: bridge

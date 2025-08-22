@@ -1,0 +1,31 @@
+[2025-08-22T10:56:14.256+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: crypto_ml_pipeline.extract_crypto_data scheduled__2025-08-22T04:55:53.036351+00:00 [queued]>
+[2025-08-22T10:56:14.262+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: crypto_ml_pipeline.extract_crypto_data scheduled__2025-08-22T04:55:53.036351+00:00 [queued]>
+[2025-08-22T10:56:14.262+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 2
+[2025-08-22T10:56:14.270+0000] {taskinstance.py:1382} INFO - Executing <Task(PythonOperator): extract_crypto_data> on 2025-08-22 04:55:53.036351+00:00
+[2025-08-22T10:56:14.276+0000] {standard_task_runner.py:57} INFO - Started process 919 to run task
+[2025-08-22T10:56:14.281+0000] {standard_task_runner.py:84} INFO - Running: ['airflow', 'tasks', 'run', 'crypto_ml_pipeline', 'extract_crypto_data', 'scheduled__2025-08-22T04:55:53.036351+00:00', '--job-id', '4', '--raw', '--subdir', 'DAGS_FOLDER/crypto_ml_pipeline.py', '--cfg-path', '/tmp/tmp90so0q96']
+[2025-08-22T10:56:14.285+0000] {standard_task_runner.py:85} INFO - Job 4: Subtask extract_crypto_data
+[2025-08-22T10:56:14.320+0000] {task_command.py:416} INFO - Running <TaskInstance: crypto_ml_pipeline.extract_crypto_data scheduled__2025-08-22T04:55:53.036351+00:00 [running]> on host 59731cef348d
+[2025-08-22T10:56:14.354+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='crypto-mlops' AIRFLOW_CTX_DAG_ID='crypto_ml_pipeline' AIRFLOW_CTX_TASK_ID='extract_crypto_data' AIRFLOW_CTX_EXECUTION_DATE='2025-08-22T04:55:53.036351+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-08-22T04:55:53.036351+00:00'
+[2025-08-22T10:56:14.355+0000] {logging_mixin.py:151} INFO - 🔄 Extracting crypto data...
+[2025-08-22T10:56:17.960+0000] {logging_mixin.py:151} INFO - ✅ Extracted 1000 records for BTC/USDT
+[2025-08-22T10:56:18.354+0000] {logging_mixin.py:151} INFO - ✅ Extracted 1000 records for ETH/USDT
+[2025-08-22T10:56:18.707+0000] {logging_mixin.py:151} INFO - ✅ Extracted 1000 records for BNB/USDT
+[2025-08-22T10:56:19.072+0000] {logging_mixin.py:151} INFO - ✅ Extracted 1000 records for ADA/USDT
+[2025-08-22T10:56:19.155+0000] {taskinstance.py:1937} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/operators/python.py", line 192, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/operators/python.py", line 209, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/crypto_ml_pipeline.py", line 66, in extract_crypto_data
+    minio_client.make_bucket(bucket_name)
+  File "/home/airflow/.local/lib/python3.10/site-packages/minio/api.py", line 623, in make_bucket
+    self._url_open(
+  File "/home/airflow/.local/lib/python3.10/site-packages/minio/api.py", line 391, in _url_open
+    raise response_error
+minio.error.S3Error: S3 operation failed; code: BucketAlreadyOwnedByYou, message: Your previous request to create the named bucket succeeded and you already own it., resource: /raw-data, request_id: 185E1187AAAB4B3F, host_id: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8, bucket_name: raw-data
+[2025-08-22T10:56:19.162+0000] {taskinstance.py:1400} INFO - Marking task as UP_FOR_RETRY. dag_id=crypto_ml_pipeline, task_id=extract_crypto_data, execution_date=20250822T045553, start_date=20250822T105614, end_date=20250822T105619
+[2025-08-22T10:56:19.167+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 4 for task extract_crypto_data (S3 operation failed; code: BucketAlreadyOwnedByYou, message: Your previous request to create the named bucket succeeded and you already own it., resource: /raw-data, request_id: 185E1187AAAB4B3F, host_id: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8, bucket_name: raw-data; 919)
+[2025-08-22T10:56:19.213+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2025-08-22T10:56:19.223+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,36 @@
+[2025-08-21T19:27:17.868+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: crypto_ml_pipeline.retrain_model manual__2025-08-21T19:27:03.598932+00:00 [queued]>
+[2025-08-21T19:27:17.871+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: crypto_ml_pipeline.retrain_model manual__2025-08-21T19:27:03.598932+00:00 [queued]>
+[2025-08-21T19:27:17.871+0000] {taskinstance.py:1359} INFO - Starting attempt 1 of 2
+[2025-08-21T19:27:17.876+0000] {taskinstance.py:1380} INFO - Executing <Task(PythonOperator): retrain_model> on 2025-08-21 19:27:03.598932+00:00
+[2025-08-21T19:27:17.880+0000] {standard_task_runner.py:57} INFO - Started process 305 to run task
+[2025-08-21T19:27:17.882+0000] {standard_task_runner.py:84} INFO - Running: ['airflow', 'tasks', 'run', 'crypto_ml_pipeline', 'retrain_model', 'manual__2025-08-21T19:27:03.598932+00:00', '--job-id', '65', '--raw', '--subdir', 'DAGS_FOLDER/crypto_ml_pipeline.py', '--cfg-path', '/tmp/tmp7z2hm79z']
+[2025-08-21T19:27:17.883+0000] {standard_task_runner.py:85} INFO - Job 65: Subtask retrain_model
+[2025-08-21T19:27:17.899+0000] {task_command.py:415} INFO - Running <TaskInstance: crypto_ml_pipeline.retrain_model manual__2025-08-21T19:27:03.598932+00:00 [running]> on host 0c11a7ad4cdf
+[2025-08-21T19:27:17.924+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='crypto-mlops' AIRFLOW_CTX_DAG_ID='crypto_ml_pipeline' AIRFLOW_CTX_TASK_ID='retrain_model' AIRFLOW_CTX_EXECUTION_DATE='2025-08-21T19:27:03.598932+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-21T19:27:03.598932+00:00'
+[2025-08-21T19:27:17.925+0000] {logging_mixin.py:151} INFO - 🤖 Retraining ML model...
+[2025-08-21T19:27:18.142+0000] {logging_mixin.py:151} INFO - 📊 Training data shape: (929, 16)
+[2025-08-21T19:27:18.177+0000] {logging_mixin.py:151} WARNING - 2025/08/21 19:27:18 WARNING mlflow.utils.git_utils: Failed to import Git (the Git executable is probably not on your PATH), so Git SHA is not available. Error: Failed to initialize: Bad git executable.
+The git executable must be specified in one of the following ways:
+    - be included in your $PATH
+    - be set via $GIT_PYTHON_GIT_EXECUTABLE
+    - explicitly set via git.refresh(<full-path-to-git-executable>)
+
+All git commands will error until this is rectified.
+
+This initial message can be silenced or aggravated in the future by setting the
+$GIT_PYTHON_REFRESH environment variable. Use one of the following values:
+    - quiet|q|silence|s|silent|none|n|0: for no message or exception
+    - warn|w|warning|log|l|1: for a warning message (logging level CRITICAL, displayed by default)
+    - error|e|exception|raise|r|2: for a raised exception
+
+Example:
+    export GIT_PYTHON_REFRESH=quiet
+[2025-08-21T19:27:18.388+0000] {logging_mixin.py:151} INFO - ⏳ Training model...
+[2025-08-21T19:27:18.389+0000] {logging_mixin.py:151} INFO - MLflow Tracking URI: http://mlflow:5000
+[2025-08-21T19:27:18.396+0000] {logging_mixin.py:151} WARNING - 2025/08/21 19:27:18 INFO mlflow.tracking._tracking_service.client: 🏃 View run invincible-rook-976 at: http://mlflow:5000/#/experiments/1/runs/b7e6c38e671e4e15bd55073c9731ee1c.
+[2025-08-21T19:27:18.397+0000] {logging_mixin.py:151} WARNING - 2025/08/21 19:27:18 INFO mlflow.tracking._tracking_service.client: 🧪 View experiment at: http://mlflow:5000/#/experiments/1.
+[2025-08-21T19:27:18.402+0000] {logging_mixin.py:151} INFO - ❌ Error during model training and logging: Run with UUID b7e6c38e671e4e15bd55073c9731ee1c is already active. To start a new run, first end the current run with mlflow.end_run(). To start a nested run, call start_run with nested=True
+[2025-08-21T19:27:18.403+0000] {python.py:194} INFO - Done. Returned value was: None
+[2025-08-21T19:27:18.407+0000] {taskinstance.py:1398} INFO - Marking task as SUCCESS. dag_id=crypto_ml_pipeline, task_id=retrain_model, execution_date=20250821T192703, start_date=20250821T192717, end_date=20250821T192718
+[2025-08-21T19:27:18.436+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-08-21T19:27:18.444+0000] {taskinstance.py:2776} INFO - 1 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,16 @@
+[2025-08-21T18:23:51.411+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: crypto_ml_pipeline.deploy_model manual__2025-08-21T18:23:29.548151+00:00 [queued]>
+[2025-08-21T18:23:51.414+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: crypto_ml_pipeline.deploy_model manual__2025-08-21T18:23:29.548151+00:00 [queued]>
+[2025-08-21T18:23:51.415+0000] {taskinstance.py:1359} INFO - Starting attempt 1 of 2
+[2025-08-21T18:23:51.419+0000] {taskinstance.py:1380} INFO - Executing <Task(PythonOperator): deploy_model> on 2025-08-21 18:23:29.548151+00:00
+[2025-08-21T18:23:51.421+0000] {standard_task_runner.py:57} INFO - Started process 326 to run task
+[2025-08-21T18:23:51.423+0000] {standard_task_runner.py:84} INFO - Running: ['airflow', 'tasks', 'run', 'crypto_ml_pipeline', 'deploy_model', 'manual__2025-08-21T18:23:29.548151+00:00', '--job-id', '47', '--raw', '--subdir', 'DAGS_FOLDER/crypto_ml_pipeline.py', '--cfg-path', '/tmp/tmpqafcv0wf']
+[2025-08-21T18:23:51.424+0000] {standard_task_runner.py:85} INFO - Job 47: Subtask deploy_model
+[2025-08-21T18:23:51.440+0000] {task_command.py:415} INFO - Running <TaskInstance: crypto_ml_pipeline.deploy_model manual__2025-08-21T18:23:29.548151+00:00 [running]> on host 7e37d9eb2ca7
+[2025-08-21T18:23:51.466+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='crypto-mlops' AIRFLOW_CTX_DAG_ID='crypto_ml_pipeline' AIRFLOW_CTX_TASK_ID='deploy_model' AIRFLOW_CTX_EXECUTION_DATE='2025-08-21T18:23:29.548151+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-21T18:23:29.548151+00:00'
+[2025-08-21T18:23:51.466+0000] {logging_mixin.py:151} INFO - 🚀 Deploying model to production...
+[2025-08-21T18:23:51.470+0000] {logging_mixin.py:151} INFO - ✅ Model deployed successfully. Run ID: 1c7c200a837a453db0aff1c30e6acca5
+[2025-08-21T18:23:51.494+0000] {logging_mixin.py:151} INFO - ⚠️ API reload failed: 500
+[2025-08-21T18:23:51.494+0000] {python.py:194} INFO - Done. Returned value was: {'deployed': True, 'model_name': 'volatility_lstm', 'run_id': '1c7c200a837a453db0aff1c30e6acca5', 'deployment_time': '2025-08-21T18:23:51.494338'}
+[2025-08-21T18:23:51.501+0000] {taskinstance.py:1398} INFO - Marking task as SUCCESS. dag_id=crypto_ml_pipeline, task_id=deploy_model, execution_date=20250821T182329, start_date=20250821T182351, end_date=20250821T182351
+[2025-08-21T18:23:51.520+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-08-21T18:23:51.526+0000] {taskinstance.py:2776} INFO - 0 downstream tasks scheduled from follow-on schedule check

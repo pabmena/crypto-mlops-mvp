@@ -1,599 +1,642 @@
 # 🚀 Crypto MLOps MVP
 
-> **Infra mínima viva para señales de riesgo y volatilidad cripto**
+> Infraestructura completa de MLOps para señales de riesgo y volatilidad de criptomonedas con capacidades avanzadas de ML, orquestación, APIs modernas y streaming en tiempo real.
 
-[![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)](https://docker.com)
-[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
-[![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=flat&logo=python&logoColor=white)](https://python.org)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-
-## 📚 Información Académica
-
-**🎓 Trabajo Final** de la materia **Operaciones de Aprendizaje de Máquina 2**  
+## 🎯 Trabajo Final - Operaciones de Aprendizaje de Máquina 2
 **🏛️ Curso de Especialización en Inteligencia Artificial**
 
-### 👨‍🎓 Alumnos:
-- **Pablo Ariel Menardi** - `a1814`
-- **Ezequiel Alejandro Caamaño** - `a1802`
+**Autores:**
+- Pablo Ariel Menardi (a1814)  
+- Ezequiel Alejandro Caamaño (a1802)
 
 ---
 
-## 🎯 Proyecto
+## 📋 Resumen Ejecutivo
 
-**Objetivo:** Exponer señales simples de riesgo y volatilidad para cripto (hoy: BTC/USDT) a través de una API FastAPI corriendo en Docker, con persistencia local y utilidades básicas de operación (métricas, reporte diario y una UI mínima).
+**Objetivo:** Exponer señales simples de riesgo y volatilidad para criptomonedas (BTC/USDT) a través de una infraestructura MLOps completa con APIs modernas, streaming en tiempo real y capacidades de ML avanzadas.
 
-**Enfoque:** **MVP** - Todo en local, sin nubes ni servicios pagos.
+**Enfoque:** MVP local sin dependencias de servicios cloud pagos, pero con arquitectura enterprise-ready.
 
+**Aclaración Importante:** Los resultados obtenidos con el presente trabajo, no constituyen recomendación de operaciones en mercados reales. Su desarrollo tiene SOLO FINES ACADÉMICOS
+
+## Flujos y tecnologías
+
+- *Ingesta y orquestación*: Airflow ejecuta el DAG crypto_ml_pipeline.py para extraer y procesar OHLCV y (cuando corresponde) reentrenar y desplegar el modelo. Los datos intermedios y artefactos de jobs se manejan como archivos en data/ y via S3 (MinIO). Las ejecuciones quedan registradas en la BD de Airflow (PostgreSQL) configurada en docker-compose.yml.
+
+- *Tracking y artefactos*: MLflow corre con backend en PostgreSQL (MLFLOW_BACKEND_STORE_URI=postgresql://.../mlflow) y almacena artefactos en MinIO (compatible S3) bajo el bucket mlflow. Los scripts scripts/* registran y promueven modelos; la API los carga desde MLflow en producción.
+
+- *Serving y UI*: La API FastAPI (api/app.py) expone endpoints para señales heurísticas y predicciones ML, y una UI integrada que consume esos endpoints. La API lee el modelo de MLflow en startup, y persiste históricos ligeros en archivos JSONL (api/data/*) para la vista de “History”.
+
+- *Streaming en tiempo real (Kafka)*: El producer publica ticks de precios en el tópico crypto-prices (reales vía CCXT o simulados). El consumer lee ese stream, calcula indicadores, genera señal heurística, consulta la API para predicción ML y publica resultados en predictions y alertas en alerts. Estos servicios demuestran el pipeline streaming y su integración con la API de ML; no están conectados directamente a la UI por simplicidad, pero podrían integrarse fácilmente exponiendo en FastAPI un WebSocket/Server-Sent Events que consuma predictions o agregando un endpoint que lea del stream/cache para que la UI lo consulte.
+
+- *Bases de datos usadas*:
+  - *PostgreSQL*: backend de MLflow (runs/metrics/params) y base de Airflow.
+  - *MinIO (S3)*: almacenamiento de artefactos de MLflow (modelos, scalers, etc.).
+  - Archivos locales JSONL para historiales simples de señales/predicciones en la API.
+
+En conjunto, Airflow coordina los workflows batch, MLflow versiona y sirve modelos con artefactos en MinIO, FastAPI sirve predicciones y la UI, y Kafka muestra la variante streaming de ingesta y scoring en tiempo real, con la opción de conectarlo a la UI vía FastAPI si se quiere visualización live.
 ---
 
-## 📋 Tabla de Contenido
-
-- [🎯 Estado Actual](#-estado-actual)
-- [🏗️ Arquitectura](#️-arquitectura)
-- [📋 Requisitos](#-requisitos)
-- [⚡ Instalación y Arranque](#-instalación-y-arranque)
-- [📂 Estructura del Repositorio](#-estructura-del-repositorio)
-- [⚙️ Configuración](#️-configuración)
-- [🔌 Endpoints de la API](#-endpoints-de-la-api)
-- [💾 Persistencia de Datos](#-persistencia-de-datos)
-- [📊 Métricas y Observabilidad](#-métricas-y-observabilidad)
-- [🖥️ Interfaz Local (UI)](#️-interfaz-local-ui)
-- [📈 Reporte Diario](#-reporte-diario)
-- [🧪 Tests](#-tests)
-- [🔧 Troubleshooting](#-troubleshooting)
-- [✅ Criterios de Aceptación](#-criterios-de-aceptación)
-- [🗺️ Roadmap](#️-roadmap)
-- [💰 Costos y Herramientas](#-costos-y-herramientas)
-- [📄 Licencia](#-licencia)
-- [📚 Comandos Útiles](#-comandos-útiles)
-
----
-
-## 🎯 Estado Actual
-
-### ✅ Lo que ya funciona:
-
-- **🐳 Contenedor FastAPI** (Python 3.11) sirviendo en `http://localhost:8800`
-- **📡 Endpoints completos:**
-  - `GET /health` — healthcheck
-  - `GET /metrics` — métricas de servicio en memoria
-  - `GET /v1/crypto/ohlcv` — OHLCV real vía ccxt (Binance; timeframe configurable)
-  - `POST /v1/crypto/signal` — señal heurística con features (retornos, volatilidad, SMA12/48, régimen de volatilidad)
-  - `GET /v1/crypto/signals/tail?n=5` — últimas n señales persistidas (JSONL)
-- **💾 Persistencia local:** `./data/signals.jsonl` (mapeado al contenedor como `/app/data`)
-- **🖥️ UI mínima:** página estática que llama a la API y muestra la señal con indicador de riesgo por color
-- **📈 Reporte diario:** script `tools/daily_report.ps1` que consulta la API y genera `report.md`
-- **🧪 Tests:** pytest para funciones core
-- **📖 Documentación:** OpenAPI/Swagger en `http://localhost:8800/docs`
-
-### 🎯 Decisiones Clave:
-
-- **🔒 Sin claves privadas:** datos públicos (ccxt sin auth)
-- **📁 Docker Compose** mapea `./data` → `/app/data` para que los archivos queden en tu PC
-- **🪟 Comandos pensados** para Windows/PowerShell (funciona también con Git Bash)
-
----
-
-## 🏗️ Arquitectura
+## 🏗️ Arquitectura del Sistema
 
 ```
-Cliente (curl / PowerShell / UI estática)
-               │
-               ▼
-        FastAPI (app.py)
-  ┌───────────┬───────────┐
-  │ ccxt      │ Features  │
-  │ (Binance) │ (ret/vol) │
-  └───────────┴───────────┘
-               │
-     ./data/signals.jsonl (host)
+┌─────────────────────────────────────────────────────────────────────┐
+│                        CRYPTO MLOPS ARCHITECTURE                    │
+├─────────────────────────────────────────────────────────────────────┤
+│ Client Layer                                                        │
+│ ┌─────────────┬─────────────┬─────────────┬─────────────────────┐   │
+│ │ REST API    │ GraphQL     │ gRPC        │ Web Dashboards      │   │
+│ │ :8800/docs  │ :4000/gql   │ :50051      │ Multiple UIs        │   │
+│ └─────────────┴─────────────┴─────────────┴─────────────────────┘   │
+│                                                                     │
+│ Processing Layer                                                    │
+│ ┌─────────────┬─────────────┬─────────────┬─────────────────────┐   │
+│ │ FastAPI     │ ML Service  │ Streaming   │ Airflow             │   │
+│ │ (Main API)  │ (LSTM)      │ (Kafka)     │ (Pipelines)         │   │
+│ └─────────────┴─────────────┴─────────────┴─────────────────────┘   │
+│                                                                     │
+│ Data & ML Layer                                                     │
+│ ┌─────────────┬─────────────┬─────────────┬─────────────────────┐   │
+│ │ MLFlow      │ MinIO       │ PostgreSQL  │ Kafka Topics        │   │
+│ │ :5000/ui    │ :9001/ui    │ (DB)        │ (prices/alerts)     │   │
+│ └─────────────┴─────────────┴─────────────┴─────────────────────┘   │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+## ✨ Características Principales
+
+- **🤖 Machine Learning:** Modelo LSTM bidireccional para predicción de volatilidad
+- **📊 MLFlow:** Tracking completo de experimentos y model registry
+- **🔄 Orquestación:** Pipelines automatizados con Airflow + MinIO
+- **🌐 APIs Modernas:** REST, GraphQL y gRPC para máxima flexibilidad
+- **📡 Streaming:** Kafka para datos en tiempo real
+- **📈 Dashboards:** Interfaces web para monitoreo y análisis
+- **🐳 Docker:** Todo containerizado y production-ready
+
+---
+
+## 🛠️ Prerrequisitos
+
+**Sistema Operativo:** Linux, macOS, o Windows con WSL2
+
+**Requisitos:**
+- Docker Desktop con **mínimo 8GB RAM** disponibles
+- Git
+- **10GB+** de espacio libre en disco
+- Puertos disponibles: 8800, 5000, 8080, 9001, 4000, 8088, 50051, 9092
+
+---
+
+## 🚀 Instalación Rápida
+
+### Opción 1: Setup Automatizado (Recomendado)
+
+```bash
+# 1. Clonar repositorio
+git clone https://github.com/pabmena/crypto-mlops-mvp.git
+cd crypto-mlops-mvp
+
+# 2. Cambiar a la branch correcta
+git checkout feature/mlflow-implementation
+
+# 3. Ejecutar setup completo
+chmod +x scripts/setup.sh
+./scripts/setup.sh
+```
+
+### Opción 2: Setup Manual
+
+```bash
+# 1. Crear archivos de configuración
+cp .env.example .env
+
+# 2. Levantar servicios
+docker-compose up -d --build
+
+# 3. Esperar inicialización (2-3 minutos)
+make check-health
+
+# 4. Configurar buckets de MinIO
+make setup-buckets
+
+# 5. Entrenar modelo inicial (opcional)
+make train-model
+```
+
+### Opción 3: Usando Make
+
+```bash
+# Todo en un comando
+make setup
 ```
 
 ---
 
-## 📋 Requisitos
+## 🌐 Servicios Disponibles
 
-- **🐳 Docker Desktop** actualizado (con Docker Compose)
-- **🪟 Windows 10/11** (PowerShell) o Git Bash
-- **⚡ (Opcional)** `make` en PATH para atajos
+Una vez iniciado el sistema, tendrás acceso a:
+
+| Servicio | URL | Credenciales | Descripción |
+|----------|-----|--------------|-------------|
+| **FastAPI** | [http://localhost:8800/docs](http://localhost:8800/docs) | - | API principal con Swagger UI |
+| **MLFlow** | [http://localhost:5000](http://localhost:5000) | - | Experimentos ML y model registry |
+| **Airflow** | [http://localhost:8080](http://localhost:8080) | `admin/admin` | Orquestación de pipelines |
+| **MinIO** | [http://localhost:9001](http://localhost:9001) | `minioadmin/minioadmin123` | Object storage UI |
+| **GraphQL** | [http://localhost:4000/graphql](http://localhost:4000/graphql) | - | Playground GraphQL |
+| **Kafka UI** | [http://localhost:8088](http://localhost:8088) | - | Monitoreo de topics Kafka |
 
 ---
 
-## ⚡ Instalación y Arranque
+## 🧪 Testing y Verificación
 
-### 1️⃣ Obtener el Repositorio
+### Verificar Estado del Sistema
 
-```powershell
-cd C:\Dev
-# Si aún no lo tienes:
-# git clone https://github.com/<tu-usuario>/crypto-mlops-mvp.git
-cd .\crypto-mlops-mvp
+```bash
+# Estado de todos los servicios
+make check-health
+
+# URLs de todos los dashboards
+make dashboard-urls
+
+# Monitoreo en tiempo real
+make monitor
 ```
 
-### 2️⃣ Preparar Configuración
+### Tests de API REST
 
-```powershell
-if (-not (Test-Path .\.env) -and (Test-Path .\.env.example)) {
-  Copy-Item .\.env.example .\.env
+```bash
+# Señal heurística básica
+curl -X POST "http://localhost:8800/v1/crypto/signal" \
+  -H "Content-Type: application/json" \
+  -d '{"symbol":"BTCUSDT","explain":true}'
+
+# Predicción con ML
+curl -X POST "http://localhost:8800/v1/crypto/ml-signal" \
+  -H "Content-Type: application/json" \
+  -d '{"symbol":"BTCUSDT","include_heuristic":true}'
+
+# Comparación de métodos
+curl "http://localhost:8800/v1/crypto/signals/compare?symbol=BTCUSDT"
+```
+
+### Test GraphQL
+
+```graphql
+query {
+  health {
+    status
+    mlAvailable
+  }
+  modelInfo {
+    modelLoaded
+    modelVersion
+  }
 }
 ```
 
-> **💡 Nota:** Hoy el `.env` es opcional; quedará para configuraciones futuras.
+### Tests Automatizados
 
-### 3️⃣ Build & Up
-
-**Con make:**
 ```bash
-make up
-```
+# Ejecutar suite completa de tests
+make test-apis
 
-**Sin make:**
-```bash
-docker compose up -d --build
-```
+# Generar datos de prueba
+make generate-test-data
 
-### 4️⃣ Verificar
-
-- **📖 Docs:** http://localhost:8800/docs
-- **❤️ Health check:**
-```powershell
-Invoke-RestMethod http://localhost:8800/health
+# Tests unitarios
+make test
 ```
 
 ---
 
-## 📂 Estructura del Repositorio
+## 📊 Machine Learning
 
+### Modelo LSTM
+
+**Arquitectura:** LSTM bidireccional para predicción de volatilidad  
+**Features:** Precio, volumen, RSI, SMA, Bollinger Bands  
+**Target:** Volatilidad futura (24h)  
+**Framework:** TensorFlow/Keras
+
+### Gestión del Modelo
+
+```bash
+# Entrenar modelo desde cero
+make train-model
+
+# Ver experimentos en MLFlow
+open http://localhost:5000
+
+# Recargar modelo en producción
+curl -X POST http://localhost:8800/v1/ml/model/reload
 ```
-crypto-mlops-mvp/
-├─ 📁 api/
-│  ├─ 📄 app.py              # FastAPI + lógica de features/señales
-│  ├─ 📄 requirements.txt    # fastapi, uvicorn, pydantic, ccxt, pandas, numpy, pytest...
-│  ├─ 🐳 Dockerfile          # ENV PYTHONPATH=/app para que 'import app' funcione
-│  └─ 📁 tests/
-│     └─ 📄 test_core.py     # tests unitarios básicos
-├─ 📁 data/                  # persistencia local (montado como /app/data)
-│  └─ 📄 signals.jsonl       # (lo genera la API al llamar /v1/crypto/signal)
-├─ 📁 tools/
-│  └─ 📄 daily_report.ps1    # genera report.md con métricas + última señal
-├─ 📁 ui/
-│  └─ 📄 index.html          # interfaz mínima (estática)
-├─ 🐳 docker-compose.yml
-├─ ⚙️ .env.example
-├─ 🛠️ Makefile               # (opcional; atajos up/down/logs/test/report)
-└─ 📖 README.md
+
+### Endpoints ML
+
+| Endpoint | Método | Descripción |
+|----------|---------|------------|
+| `/v1/ml/model/info` | GET | Información del modelo actual |
+| `/v1/ml/model/reload` | POST | Recargar modelo desde MLFlow |
+| `/v1/crypto/ml-signal` | POST | Generar predicción ML |
+| `/v1/crypto/signals/compare` | GET | Comparar métodos heurístico vs ML |
+
+---
+
+## 🔄 Orquestación con Airflow
+
+### DAG Principal: `crypto_ml_pipeline`
+
+**Tareas:**
+1. Extracción de datos crypto
+2. Procesamiento y feature engineering  
+3. Validación de calidad de datos
+4. Reentrenamiento de modelo
+5. Deploy automático a producción
+
+### Gestión de Pipelines
+
+```bash
+# Acceder a Airflow UI
+open http://localhost:8080
+
+# Ver logs de Airflow
+make logs-airflow
+
+# Triggear pipeline manualmente desde UI o:
+# En Airflow UI -> DAGs -> crypto_ml_pipeline -> Trigger DAG
+```
+
+---
+
+## 📡 Streaming con Kafka
+
+### Topics Disponibles
+
+- **crypto-prices:** Precios en tiempo real
+- **predictions:** Predicciones generadas  
+- **alerts:** Alertas de anomalías
+
+### Monitoreo de Streaming
+
+```bash
+# Ver topics activos
+make show-kafka-topics
+
+# Logs del streaming
+make logs-kafka
+
+# UI de Kafka
+open http://localhost:8088
+```
+
+### Ejemplo de Mensaje
+
+```json
+{
+  "symbol": "BTCUSDT",
+  "price": 43250.00,
+  "volume": 1234.56,
+  "timestamp": "2025-08-21T10:30:00Z",
+  "volatility_prediction": 0.0234
+}
+```
+
+---
+
+## 💾 Gestión de Datos con MinIO
+
+### Buckets Automáticos
+
+- **raw-data:** Datos crudos de exchanges
+- **processed-data:** Features procesadas
+- **models:** Modelos ML entrenados
+- **mlflow:** Artefactos de MLFlow
+- **quality-reports:** Reportes de calidad
+
+### Comandos Útiles
+
+```bash
+# Acceder a MinIO UI
+open http://localhost:9001
+
+# CLI dentro del container
+docker-compose exec minio mc ls local/
+
+# Backup de datos
+make backup-data
+```
+
+---
+
+## 🔌 APIs Disponibles
+
+### REST API (FastAPI)
+
+**Base URL:** `http://localhost:8800`
+
+#### Endpoints Principales
+
+```bash
+GET    /health              # Health check
+GET    /metrics             # Métricas del sistema  
+GET    /v1/crypto/ohlcv     # Datos OHLCV
+POST   /v1/crypto/signal    # Señal heurística
+POST   /v1/crypto/ml-signal # Predicción ML
+GET    /v1/crypto/signals/compare # Comparar métodos
+```
+
+### GraphQL API
+
+**URL:** `http://localhost:4000/graphql`
+
+#### Queries Disponibles
+
+- `health()`: Estado del sistema
+- `modelInfo()`: Información del modelo ML  
+- `ohlcvData(input)`: Datos históricos
+
+#### Mutations Disponibles
+
+- `generateSignal(input)`: Generar señal heurística
+- `generateMlSignal(input)`: Generar predicción ML
+
+### gRPC API
+
+**Puerto:** `50051`
+
+#### Servicios Disponibles
+
+- `GetOHLCV`: Obtener datos históricos
+- `GenerateSignal`: Generar señal heurística  
+- `GenerateMLPrediction`: Predicción ML
+- `CompareSignals`: Comparar métodos
+- `HealthCheck`: Verificar estado
+- `StreamPrices`: Stream de precios en tiempo real
+
+---
+
+## 📈 Monitoreo y Métricas
+
+### Métricas del Sistema
+
+```bash
+# Ver métricas en tiempo real
+curl http://localhost:8800/metrics
+```
+
+### Ejemplo de Respuesta
+
+```json
+{
+  "start_time": "2025-08-21T10:00:00Z",
+  "requests_total": 1542,
+  "signals_total": 234, 
+  "ml_predictions_total": 89,
+  "last_signal_at": "2025-08-21T10:30:00Z",
+  "last_ml_prediction_at": "2025-08-21T10:25:00Z"
+}
+```
+
+### Comandos de Monitoreo
+
+```bash
+# Monitoreo interactivo
+make monitor
+
+# Logs por servicio
+make logs-api      # Solo API
+make logs-mlflow   # Solo MLFlow  
+make logs-kafka    # Solo Kafka
+make logs-airflow  # Solo Airflow
+
+# Todos los logs
+make logs
+```
+
+---
+
+## 🛠️ Comandos Make Disponibles
+
+### Setup y Configuración
+```bash
+make setup          # Setup completo automático
+make check-health    # Verificar estado de servicios  
+make setup-buckets   # Configurar buckets de MinIO
+```
+
+### Desarrollo y Testing  
+```bash
+make test           # Tests unitarios
+make test-apis      # Tests de endpoints
+make train-model    # Entrenar modelo ML
+make generate-test-data # Generar datos de prueba
+```
+
+### Monitoreo y Logs
+```bash
+make monitor        # Monitoreo en tiempo real
+make dashboard-urls # URLs de dashboards
+make logs          # Ver todos los logs
+make logs-api      # Logs específicos del API
+```
+
+### Mantenimiento
+```bash
+make clean         # Limpiar recursos Docker
+make backup-data   # Backup de datos
+make dev-reset     # Reset completo del entorno
+```
+
+### Kafka y Streaming
+```bash
+make show-kafka-topics # Ver topics de Kafka
+make logs-kafka       # Logs del streaming
 ```
 
 ---
 
 ## ⚙️ Configuración
 
-### Variables de Entorno (`.env`)
-
-Variables reservadas para futuras integraciones:
-
-```env
-# Ejemplos (no usados hoy)
-# BINANCE_API_KEY=
-# BINANCE_API_SECRET=
-# LOG_LEVEL=INFO
-```
-
-> **🔒 Importante:** Todo corre con datos públicos.
-
----
-
-## 🔌 Endpoints de la API
-
-**Base URL:** `http://localhost:8800`
-
-### 1️⃣ `GET /health`
-
-**Respuesta:**
-```json
-{
-  "status": "ok"
-}
-```
-
-### 2️⃣ `GET /metrics`
-
-**Respuesta:**
-```json
-{
-  "start_time": "2025-08-17T05:23:31.686555Z",
-  "requests_total": 3,
-  "signals_total": 1,
-  "last_signal_at": "2025-08-17T05:24:00.229495Z"
-}
-```
-
-### 3️⃣ `GET /v1/crypto/ohlcv`
-
-**Query Parameters:**
-- `symbol` (default: `BTCUSDT` o `BTC/USDT`)
-- `exchange` (default: `binance`)
-- `timeframe` (default: `1h`)
-- `limit` (default: `200`)
-
-**Ejemplo:**
-```powershell
-Invoke-RestMethod "http://localhost:8800/v1/crypto/ohlcv?symbol=BTCUSDT&exchange=binance&timeframe=1h&limit=50" `
-| ConvertTo-Json -Depth 4
-```
-
-**Respuesta:**
-```json
-{
-  "symbol": "BTC/USDT",
-  "exchange": "binance",
-  "timeframe": "1h",
-  "limit": 50,
-  "rows": 50,
-  "data": [
-    {
-      "ts": 1755392400000,
-      "open": 117255.18,
-      "high": 118076.11,
-      "low": 117001.50,
-      "close": 118076.11,
-      "volume": 1234.56
-    }
-  ]
-}
-```
-
-### 4️⃣ `POST /v1/crypto/signal`
-
-**Request Body:**
-```json
-{
-  "symbol": "BTCUSDT",
-  "horizon_min": 60,
-  "explain": true,
-  "exchange": "binance",
-  "timeframe": "1h",
-  "limit": 200
-}
-```
-
-**Ejemplo:**
-```powershell
-$body = @{ 
-  symbol="BTCUSDT"; 
-  horizon_min=60; 
-  explain=$true; 
-  exchange="binance"; 
-  timeframe="1h"; 
-  limit=200 
-} | ConvertTo-Json
-
-Invoke-RestMethod http://localhost:8800/v1/crypto/signal `
-  -Method POST `
-  -ContentType 'application/json' `
-  -Body $body `
-| ConvertTo-Json -Depth 6
-```
-
-**Respuesta:**
-```json
-{
-  "symbol": "BTC/USDT",
-  "horizon_min": 60,
-  "risk_score": 0.95,
-  "nowcast_ret": 0.0007,
-  "vol_regime": "calm",
-  "explain": {
-    "nowcast_ret": 0.0007,
-    "vol": 0.0014,
-    "vol_regime": "calm",
-    "risk_score": 0.9582,
-    "features_tail": [
-      {
-        "time": "2025-08-17T04:00:00Z",
-        "close": 118076.11,
-        "ret": 0.0033,
-        "vol24": 0.0015,
-        "sma12": 117500.25,
-        "sma48": 116800.75
-      }
-    ]
-  }
-}
-```
-
-**📋 Efectos Colaterales:**
-- ➕ Incrementa `signals_total` y `requests_total`
-- 🕐 Actualiza `last_signal_at`
-- 💾 Persiste un renglón en `./data/signals.jsonl`
-
-### 5️⃣ `GET /v1/crypto/signals/tail?n=5`
-
-Devuelve las últimas `n` señales persistidas (JSON por línea).
-
-**Ejemplo:**
-```powershell
-Invoke-RestMethod "http://localhost:8800/v1/crypto/signals/tail?n=5" | ConvertTo-Json -Depth 3
-```
-
----
-
-## 💾 Persistencia de Datos
-
-### 📁 Volumen Mapeado
-
-```yaml
-# docker-compose.yml
-volumes:
-  - ./data:/app/data
-```
-
-### 📄 Archivo Principal
-
-- **Ubicación:** `./data/signals.jsonl`
-- **Formato:** Una señal por línea (JSONL)
-
-### 👀 Chequeo Rápido
-
-```powershell
-Get-Content .\data\signals.jsonl -Tail 5
-```
-
----
-
-## 📊 Métricas y Observabilidad
-
-### 📈 Endpoint de Métricas
-
-`GET /metrics` entrega contadores in-memory:
-- `requests_total`
-- `signals_total` 
-- `last_signal_at`
-- `start_time`
-
-### 📝 Logs
+### Variables de Entorno (.env)
 
 ```bash
-docker compose logs -f api
-```
+# Database
+POSTGRES_USER=mlops
+POSTGRES_PASSWORD=mlops123
+POSTGRES_DB=crypto_mlops
 
-> **🚀 Próximamente:** Integración con Prometheus/Grafana en el Roadmap.
+# MLFlow  
+MLFLOW_TRACKING_URI=http://localhost:5000
+MLFLOW_BACKEND_STORE_URI=postgresql://mlops:mlops123@postgres:5432/crypto_mlops
+
+# MinIO
+MINIO_ACCESS_KEY=minioadmin
+MINIO_SECRET_KEY=minioadmin123
+
+# Kafka
+KAFKA_BOOTSTRAP_SERVERS=localhost:9092
+KAFKA_AUTO_CREATE_TOPICS_ENABLE=true
+
+# API Keys (opcional para datos reales)
+BINANCE_API_KEY=your_api_key
+BINANCE_SECRET_KEY=your_secret_key
+```
 
 ---
 
-## 🖥️ Interfaz Local (UI)
+## 🐛 Troubleshooting
 
-### 📄 Archivo
+### Problemas Comunes
 
-`ui/index.html` (estático)
-
-### 🌐 Cómo Abrir
-
-**Opción A (rápida):**
-Doble clic en `ui/index.html` (si el navegador permite CORS local)
-
-**Opción B (segura):**
+#### Servicios no responden
 ```bash
-cd ui
-python -m http.server 8088
-# luego abrir http://localhost:8088
+make check-health
+docker-compose restart api
 ```
 
-### 🎨 Características
-
-- **📊 Última señal:** symbol, risk_score, vol_regime, hora
-- **🎯 Indicador de riesgo por color:**
-  - `calm` → 🟢 verde / ✅
-  - `normal` → 🟡 amarillo / ⚠️
-  - `turbulent` → 🔴 rojo / 🔴
-- **🔄 Botón** para refrescar datos
-
-> **💡 Uso recomendado:** Tener la API levantada y, en otra pestaña, esta UI para monitoreo manual rápido.
-
----
-
-## 📈 Reporte Diario
-
-### 📄 Script
-
-`tools/daily_report.ps1`
-
-### 📋 Contenido del Reporte
-
-- Estado de `/metrics`
-- Última señal de `/v1/crypto/signal`
-- TODOs de 24h (plantilla simple)
-
-### ▶️ Ejecutar
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\daily_report.ps1
-Get-Content .\report.md -TotalCount 60
+#### Falta de memoria
+```bash
+docker system prune -f
+make clean
 ```
 
-> **⚠️ Importante:** Confirmar que la API esté arriba (`docker compose up -d --build`) y que PowerShell permite ejecutar scripts.
+#### Puerto ocupado
+```bash
+# Verificar qué proceso usa el puerto
+sudo netstat -tlnp | grep :8800
 
----
+# Liberar puerto si es necesario
+sudo kill -9 <PID>
+```
 
-## 🧪 Tests
+#### MLFlow no conecta
+```bash
+make logs-mlflow
+docker-compose restart mlflow postgres
+```
 
-### 📦 Configuración
+#### Kafka no produce/consume  
+```bash
+make logs-kafka
+docker-compose restart kafka zookeeper
+```
 
-- **Framework:** pytest (incluido en `api/requirements.txt`)
-- **Environment:** `ENV PYTHONPATH=/app` en Dockerfile para que `pytest` pueda hacer `import app`
-
-### ▶️ Ejecutar Tests
+### Logs Detallados
 
 ```bash
-docker compose run --rm api pytest -q
+# Ver todos los logs
+make logs
+
+# Logs específicos por servicio  
+docker-compose logs -f api
+docker-compose logs -f mlflow
+docker-compose logs -f airflow-webserver
+docker-compose logs -f crypto-producer
 ```
 
-### 🔧 Troubleshooting
-
-Si aparece `ModuleNotFoundError: No module named 'app'`, reconstruir:
+### Reset Completo
 
 ```bash
-docker compose build --no-cache api
-```
-
----
-### 1️⃣ `NameError: name 'pathlib' is not defined`
-
-**✅ Solucionado** unificando a:
-
-```python
-from pathlib import Path
-```
-
-y usando `Path(...)` en todo el código.
-
-### 2️⃣ No se escribe `signals.jsonl`
-
-**🔍 Verificar volumen:**
-```powershell
-docker compose config | Select-String -Pattern '/app/data'
-```
-
-**🔄 Prueba ida y vuelta:**
-```bash
-docker compose exec api sh -lc 'mkdir -p /app/data && date > /app/data/roundtrip.txt && ls -la /app/data && cat /app/data/roundtrip.txt'
-Get-Content .\data\roundtrip.txt
-```
-
-### 3️⃣ ccxt / datos de exchange
-
-La API usa datos públicos. Si falla:
-- Probá un `limit` menor
-- Revisá tu conexión a internet
-
-### 4️⃣ Swagger no muestra endpoints
-
-1. Reabrí `http://localhost:8800/docs`
-2. Si faltan, reconstruí:
-```bash
-docker compose up -d --build
+# Si nada funciona, reset completo
+make dev-reset
 ```
 
 ---
 
-## ✅ Criterios de Aceptación
+## 🏭 Consideraciones para Producción
 
-### 🎯 Nivel Local
+### Seguridad
 
-- ✅ **Servicio ML en local:** FastAPI + Docker con endpoints claros
-- ✅ **Datos reales:** Binance (OHLCV) vía ccxt
-- ✅ **Ciclo mínimo:** features → señal → persistencia → métricas → UI/reportes
-- ✅ **Automación:** script diario en `tools/`
-- ✅ **Buenas prácticas:** tests básicos, README, Makefile, .env, logs y métricas
+- **Cambiar credenciales por defecto** en `.env`
+- **Configurar HTTPS/TLS** para todos los servicios
+- **Implementar autenticación** y autorización
+- **Configurar firewall** y network policies
 
----
+### Escalabilidad
 
-## 🗺️ Roadmap futuro
+- **Migrar a Kubernetes** en lugar de Docker Compose
+- **Configurar auto-scaling** para componentes críticos
+- **Implementar load balancers**
+- **Usar base de datos gestionada**
 
-### 🚀 Prioridad 1
+### Monitoreo
 
-- 🔄 **Batch:** `POST /v1/crypto/signal/batch` (múltiples símbolos/timeframes)
-- 🔄 **Persistir métricas** en SQLite (`./data`)
+- **Integrar con Prometheus/Grafana**
+- **Configurar alertas** proactivas
+- **Logging centralizado** con ELK Stack
+- **APM** para performance monitoring
 
-### ⚡ Prioridad 2
+### Backup y Recuperación
 
-- 📊 Backtesting simple (rolling window)
-- 📖 Endpoint de `explain` más detallado
-- 🐳 Docker `HEALTHCHECK` + `/version`
-
-### 🌟 Prioridad 3
-
-- 📈 Prometheus/Grafana
-- 🔄 Airflow/MLflow/MinIO
-- 🚢 Canary deploy / rollback
-- 🔒 Seguridad: API-key y rate-limit
+- **Backup automático** de datos críticos
+- **Disaster recovery plan**
+- **Testing de backups** regular
 
 ---
 
-## 💰 Costos y Herramientas
+## 📁 Estructura del Proyecto
 
-### 🛠️ Desarrollo Principal
-
-- **GitHub Copilot + ChatGPT** (bajo costo/flat)
-- **Claude Code / Flow:** opcional, para auditorías/ediciones puntuales
-
-> **💡 Recomendación:** Cerrar sesiones/terminales al terminar para evitar procesos colgados.
-
-### 🏃‍♂️ Runtime del MVP
-
-- **Sin APIs pagas** (ccxt usa datos públicos)
-- **Costo total:** $0 💸
-
----
-
-## 📄 Licencia
-
-**MIT** (o la que se defina para el repo). Agregar `LICENSE` si corresponde.
-
----
-
-## 📚 Comandos Útiles
-
-### 🐳 Docker Operations
-
-```bash
-# Levantar servicios
-docker compose up -d --build
-
-# Ver estado
-docker compose ps
-
-# Ver logs
-docker compose logs -f api
-
-# Parar servicios
-docker compose down
 ```
-
-### 🧪 Probar Endpoints (PowerShell)
-
-```powershell
-# Health check
-Invoke-RestMethod http://localhost:8800/health
-
-# OHLCV data
-Invoke-RestMethod "http://localhost:8800/v1/crypto/ohlcv?symbol=BTCUSDT&exchange=binance&timeframe=1h&limit=50" `
-| ConvertTo-Json -Depth 4
-
-# Generate signal
-$body = @{ 
-  symbol="BTCUSDT"; 
-  horizon_min=60; 
-  explain=$true; 
-  exchange="binance"; 
-  timeframe="1h"; 
-  limit=200 
-} | ConvertTo-Json
-
-Invoke-RestMethod http://localhost:8800/v1/crypto/signal `
-  -Method POST `
-  -ContentType 'application/json' `
-  -Body $body `
-| ConvertTo-Json -Depth 6
-```
-
-### 💾 Ver Persistencia
-
-```powershell
-Get-Content .\data\signals.jsonl -Tail 5
+crypto-mlops-mvp/
+├── api/                    # FastAPI application
+│   ├── models/            # Pydantic models
+│   ├── routes/            # API routes  
+│   └── services/          # Business logic
+├── ml/                     # ML models and services
+│   ├── models/            # Model definitions
+│   ├── inference/         # Inference service
+│   ├── training/          # Training scripts
+│   └── mlflow/            # MLFlow configuration
+├── airflow/               # Airflow DAGs
+│   ├── dags/             # DAG definitions
+│   └── plugins/          # Custom plugins
+├── streaming/             # Kafka producer/consumer
+│   ├── producer/         # Data producers
+│   └── consumer/         # Data consumers
+├── grpc/                  # gRPC server
+├── graphql/               # GraphQL server  
+├── scripts/               # Setup and utility scripts
+├── data/                  # Persistent data
+├── docker-compose.yml     # Services orchestration
+├── .env.example          # Environment variables template
+├── Makefile              # Automation commands
+└── README.md             # This file
 ```
 
 ---
 
-> **📝 Nota del alumno:** Este MVP prioriza claridad y reproducibilidad local. La idea es cerrar un circuito pequeño pero completo (datos reales → features → señal → persistencia → UI/reporte), y dejar el terreno preparado para escalar con Airflow/MLflow/MinIO cuando el tiempo lo permita.
+## 🤝 Contribuir
+
+1. **Fork** del proyecto
+2. Crear **feature branch**: `git checkout -b feature/nueva-funcionalidad`  
+3. **Commit** cambios: `git commit -am 'Agregar nueva funcionalidad'`
+4. **Push** a la branch: `git push origin feature/nueva-funcionalidad`
+5. Crear **Pull Request**
 
 ---
 
-<div align="center">
+## 📝 Licencia
 
-**🚀 ¡Listo para ser usado!**
+MIT License - Ver [LICENSE](LICENSE) para más detalles.
 
-[![⭐ Star this repo](https://img.shields.io/github/stars/tu-usuario/crypto-mlops-mvp?style=social)](https://github.com/pabmena/crypto-mlops-mvp)
+---
 
-</div>
+## 📞 Soporte
 
+Para reportar bugs o solicitar features:
+- **Issues:** [GitHub Issues](https://github.com/pabmena/crypto-mlops-mvp/issues)
+- **Documentación:** Este README
+- **Contacto:** Pablo Menardi & Ezequiel Caamaño
+
+---
+
+## 🙏 Agradecimientos
+
+Proyecto desarrollado como Trabajo Final para la materia **Operaciones de Aprendizaje de Máquina 2** del **Curso de Especialización en Inteligencia Artificial**.
+
+**Universidad:** Universidad de Buenos Aires  
+**Año:** 2025
+
+---
+
+> 💡 **Tip:** Para una experiencia óptima, inicia con `make setup` y luego accede a http://localhost:8800/docs para explorar la API interactiva.
