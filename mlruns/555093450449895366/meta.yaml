@@ -1,0 +1,6 @@
+artifact_location: file:///Users/ezequiel/mlops2/crypto-mlops-mvp/mlruns/555093450449895366
+creation_time: 1755821058232
+experiment_id: '555093450449895366'
+last_update_time: 1755821058232
+lifecycle_stage: active
+name: crypto-predictor
