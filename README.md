@@ -19,6 +19,22 @@
 
 **Aclaración Importante:** Los resultados obtenidos con el presente trabajo, no constituyen recomendación de operaciones en mercados reales. Su desarrollo tiene SOLO FINES ACADÉMICOS
 
+## Flujos y tecnologías
+
+- *Ingesta y orquestación*: Airflow ejecuta el DAG crypto_ml_pipeline.py para extraer y procesar OHLCV y (cuando corresponde) reentrenar y desplegar el modelo. Los datos intermedios y artefactos de jobs se manejan como archivos en data/ y via S3 (MinIO). Las ejecuciones quedan registradas en la BD de Airflow (PostgreSQL) configurada en docker-compose.yml.
+
+- *Tracking y artefactos*: MLflow corre con backend en PostgreSQL (MLFLOW_BACKEND_STORE_URI=postgresql://.../mlflow) y almacena artefactos en MinIO (compatible S3) bajo el bucket mlflow. Los scripts scripts/* registran y promueven modelos; la API los carga desde MLflow en producción.
+
+- *Serving y UI*: La API FastAPI (api/app.py) expone endpoints para señales heurísticas y predicciones ML, y una UI integrada que consume esos endpoints. La API lee el modelo de MLflow en startup, y persiste históricos ligeros en archivos JSONL (api/data/*) para la vista de “History”.
+
+- *Streaming en tiempo real (Kafka)*: El producer publica ticks de precios en el tópico crypto-prices (reales vía CCXT o simulados). El consumer lee ese stream, calcula indicadores, genera señal heurística, consulta la API para predicción ML y publica resultados en predictions y alertas en alerts. Estos servicios demuestran el pipeline streaming y su integración con la API de ML; no están conectados directamente a la UI por simplicidad, pero podrían integrarse fácilmente exponiendo en FastAPI un WebSocket/Server-Sent Events que consuma predictions o agregando un endpoint que lea del stream/cache para que la UI lo consulte.
+
+- *Bases de datos usadas*:
+  - *PostgreSQL*: backend de MLflow (runs/metrics/params) y base de Airflow.
+  - *MinIO (S3)*: almacenamiento de artefactos de MLflow (modelos, scalers, etc.).
+  - Archivos locales JSONL para historiales simples de señales/predicciones en la API.
+
+En conjunto, Airflow coordina los workflows batch, MLflow versiona y sirve modelos con artefactos en MinIO, FastAPI sirve predicciones y la UI, y Kafka muestra la variante streaming de ingesta y scoring en tiempo real, con la opción de conectarlo a la UI vía FastAPI si se quiere visualización live.
 ---
 
 ## 🏗️ Arquitectura del Sistema
