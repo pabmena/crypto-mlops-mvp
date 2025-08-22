@@ -236,6 +236,42 @@ def get_crypto_data(symbol: str, exchange: str = "binance",
     return df_ml
 
 # -----------------------------------------------------------------------------
+# Funciones de Feature Engineering
+# -----------------------------------------------------------------------------
+def _calculate_rsi(close_prices, window=14):
+    delta = close_prices.diff()
+    gain = (delta.where(delta > 0, 0)).rolling(window=window).mean()
+    loss = (-delta.where(delta < 0, 0)).rolling(window=window).mean()
+    rs = gain / loss
+    return 100 - (100 / (1 + rs))
+
+def _calculate_bollinger(close_prices, window=20, num_std=2):
+    sma = close_prices.rolling(window=window).mean()
+    std = close_prices.rolling(window=window).std()
+    upper = sma + (std * num_std)
+    lower = sma - (std * num_std)
+    return upper, lower
+
+def prepare_features_for_prediction(df):
+    """
+    Prepara las features para el modelo de predicción, replicando la lógica de entrenamiento.
+    """
+    data = df.copy()
+    data['returns'] = data['close'].pct_change()
+    data['volatility'] = data['returns'].rolling(window=24).std()
+    data['sma_12'] = data['close'].rolling(window=12).mean()
+    data['sma_48'] = data['close'].rolling(window=48).mean()
+    data['rsi'] = _calculate_rsi(data['close'])
+    data['bollinger_upper'], data['bollinger_lower'] = _calculate_bollinger(data['close'])
+    # Asume que el modelo usa un promedio móvil del volumen
+    data['volume_sma'] = data['volume'].rolling(window=12).mean()
+    
+    # Asume que el modelo también usa 'open', 'high', 'low', 'close'
+    # Estas columnas ya están en el DataFrame original
+    
+    return data.dropna()
+
+# -----------------------------------------------------------------------------
 # Endpoints ORIGINALES
 # -----------------------------------------------------------------------------
 @app.get("/health")

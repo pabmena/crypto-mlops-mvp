@@ -5,115 +5,163 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 from datetime import datetime, timezone
+import warnings
+import joblib
+
+# Ignorar advertencias de pydantic y MLflow
+warnings.filterwarnings('ignore', category=UserWarning, module='pydantic')
+warnings.filterwarnings('ignore', category=FutureWarning, module='mlflow')
 
 # -----------------------------------------------------------------------------
 # Configuración
 # -----------------------------------------------------------------------------
-
-# Nombres de modelos y características
 REGISTERED_MODEL_NAME = "crypto-predictor"
-# Se asume que estos son los nombres de las columnas que tu modelo espera
-FEATURE_COLUMNS = ['open', 'high', 'low', 'close', 'volume', 'returns', 'volatility', 
-                   'sma_12', 'sma_48', 'volume_sma', 'rsi', 'bb_upper', 'bb_lower']
+
+# Columnas de features esperadas por el LSTM
+LSTM_FEATURE_COLUMNS = ['close', 'log_volume', 'returns', 'volatility', 
+                        'sma_12', 'sma_48', 'rsi', 'bollinger_upper', 
+                        'bollinger_lower', 'momentum_12', 'momentum_24']
+
+# -----------------------------------------------------------------------------
+# Feature Engineering
+# -----------------------------------------------------------------------------
+def _calculate_rsi(close_prices, window=14):
+    delta = close_prices.diff()
+    gain = (delta.where(delta > 0, 0)).rolling(window=window).mean()
+    loss = (-delta.where(delta < 0, 0)).rolling(window=window).mean()
+    rs = gain / loss
+    return 100 - (100 / (1 + rs))
+
+def _calculate_bollinger(close_prices, window=20, num_std=2):
+    sma = close_prices.rolling(window=window).mean()
+    std = close_prices.rolling(window=window).std()
+    upper = sma + (std * num_std)
+    lower = sma - (std * num_std)
+    return upper, lower
+
+def prepare_features_for_prediction(df):
+    """Prepara las features para predicción replicando el entrenamiento"""
+    data = df.copy()
+    data['returns'] = data['close'].pct_change()
+    data['volatility'] = data['returns'].rolling(window=24).std()
+    data['sma_12'] = data['close'].rolling(window=12).mean()
+    data['sma_48'] = data['close'].rolling(window=48).mean()
+    data['rsi'] = _calculate_rsi(data['close'])
+    data['bollinger_upper'], data['bollinger_lower'] = _calculate_bollinger(data['close'])
+    data['log_volume'] = np.log1p(data['volume'])
+    data['momentum_12'] = data['close'] / data['close'].shift(12) - 1
+    data['momentum_24'] = data['close'] / data['close'].shift(24) - 1
+    return data.dropna()
 
 # -----------------------------------------------------------------------------
 # Servicio de ML
 # -----------------------------------------------------------------------------
 class MLService:
+    SEQUENCE_LENGTH = 48
     def __init__(self, model_name: str = REGISTERED_MODEL_NAME):
-        """
-        Inicializa el servicio de ML.
-        No carga el modelo aquí. La carga se hará explícitamente.
-        """
         self.model = None
         self.model_name = model_name
         self.model_version = None
         self.model_loaded = False
         self.load_time = None
         self.metrics = None
-        
-        # Conectar al servidor de MLflow
+        self.feature_columns = LSTM_FEATURE_COLUMNS  # columnas que el modelo espera
+
         mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI", "http://mlflow:5000"))
 
+    # --------------------- Cargar modelo ---------------------
     def load_model(self) -> bool:
-        """
-        Carga la última versión del modelo en producción desde MLflow.
-        """
+        """Carga el modelo LSTM desde MLflow"""
         print("🔄 Cargando modelo de producción desde MLflow...")
         try:
-            # Uri para cargar la última versión del modelo en etapa 'Production'
+            # Cargar modelo
             model_uri = f"models:/{self.model_name}/Production"
-            
-            # Cargar el modelo
-            self.model = mlflow.pyfunc.load_model(model_uri)
-            
-            # Obtener información de la versión del modelo
+            self.model = mlflow.tensorflow.load_model(model_uri)
+
+            # Obtener versión y metrics
             client = mlflow.tracking.MlflowClient()
             model_versions = client.get_latest_versions(self.model_name, stages=["Production"])
-            
             if not model_versions:
-                print("❌ No se encontró ninguna versión del modelo en la etapa 'Production'.")
+                print(f"❌ No se encontró modelo '{self.model_name}' en Production")
                 self.model = None
                 self.model_loaded = False
                 return False
-            
+
             self.model_version = model_versions[0].version
-            self.model_loaded = True
-            self.load_time = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
-            
-            # Obtener métricas y parámetros del modelo si están disponibles
             run_id = model_versions[0].run_id
             run = client.get_run(run_id)
             self.metrics = run.data.metrics
-            
-            print(f"✅ Modelo '{self.model_name}' versión {self.model_version} cargado exitosamente.")
+            self.model_loaded = True
+            self.load_time = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+
+            # Descargar artifacts y cargar scalers
+            import tempfile
+            with tempfile.TemporaryDirectory() as temp_dir:
+                artifacts_path = mlflow.artifacts.download_artifacts(model_uri, dst_path=temp_dir)
+                scaler_x_path = Path(artifacts_path) / "model_artifacts" / "scaler_X.pkl"
+                scaler_y_path = Path(artifacts_path) / "model_artifacts" / "scaler_y.pkl"
+                features_path = Path(artifacts_path) / "model_artifacts" / "feature_columns.pkl"
+
+                if scaler_x_path.exists():
+                    self.scaler_X = joblib.load(scaler_x_path)
+                if scaler_y_path.exists():
+                    self.scaler_y = joblib.load(scaler_y_path)
+                if features_path.exists():
+                    self.feature_columns = joblib.load(features_path)
+
+            # Ajustar SEQUENCE_LENGTH si el modelo lo define
+            if hasattr(self.model, 'sequence_length'):
+                self.SEQUENCE_LENGTH = self.model.sequence_length
+
+            print(f"✅ Modelo '{self.model_name}' versión {self.model_version} cargado correctamente.")
             return True
+
         except Exception as e:
-            print(f"❌ Error al cargar el modelo: {e}")
+            print(f"❌ Error cargando modelo: {e}")
             self.model = None
             self.model_loaded = False
             return False
 
     def reload_model(self) -> dict:
-        """
-        Recarga el modelo. Útil para ser llamado por el DAG después del entrenamiento.
-        """
         print("🔁 Solicitud de recarga de modelo recibida.")
-        if self.load_model():
-            return {"success": True, "message": "Modelo recargado exitosamente."}
-        else:
-            return {"success": False, "message": "Fallo al recargar el modelo."}
+        success = self.load_model()
+        return {"success": success, "message": "Modelo recargado exitosamente" if success else "Fallo al recargar"}
 
+    # --------------------- Predicción ---------------------
     def predict(self, df: pd.DataFrame) -> dict:
         """
-        Realiza una predicción utilizando el modelo cargado (LSTM 3D input).
+        Predicción usando LSTM sin scalers (datos crudos).
         """
         if not self.model_loaded or self.model is None:
-            print("[MLService] Modelo no está cargado para predicción")
             return {"error": "Modelo no cargado"}
 
         try:
-            # Columnas que realmente entran al LSTM
-            LSTM_FEATURE_COLUMNS = ['returns', 'volatility', 'sma_12', 'sma_48',
-                                    'volume_sma', 'rsi', 'bb_upper', 'bb_lower',
-                                    'open', 'high', 'low']
-            SEQUENCE_LENGTH = 48
+            df_processed = prepare_features_for_prediction(df)
 
-            # Verificar que hay suficientes filas
-            if len(df) < SEQUENCE_LENGTH:
-                return {"error": f"No hay suficientes filas en el DataFrame. Se necesitan {SEQUENCE_LENGTH}."}
+            # Verificar columnas faltantes
+            missing_cols = [col for col in self.feature_columns if col not in df_processed.columns]
+            if missing_cols:
+                return {"error": f"Faltan columnas: {missing_cols}"}
 
-            # Seleccionar las columnas y las últimas SEQUENCE_LENGTH filas
-            df_seq = df[LSTM_FEATURE_COLUMNS].tail(SEQUENCE_LENGTH)
+            # Seleccionar últimas SEQUENCE_LENGTH filas
+            df_seq = df_processed[self.feature_columns].tail(self.SEQUENCE_LENGTH)
 
-            # Convertir a numpy array 3D (1, SEQUENCE_LENGTH, n_features)
-            seq_input = df_seq.to_numpy().reshape(1, SEQUENCE_LENGTH, len(LSTM_FEATURE_COLUMNS))
+            # Rellenar con ceros si hay menos filas
+            if len(df_seq) < self.SEQUENCE_LENGTH:
+                pad = pd.DataFrame(
+                    0,
+                    index=range(self.SEQUENCE_LENGTH - len(df_seq)),
+                    columns=self.feature_columns
+                )
+                df_seq = pd.concat([pad, df_seq], ignore_index=True)
 
-            # Realizar la predicción
-            prediction = self.model.predict(seq_input)
-            predicted_volatility = float(prediction[0])
+            # Convertir a 3D para LSTM: (1, SEQUENCE_LENGTH, n_features)
+            seq_input = df_seq.values.reshape(1, self.SEQUENCE_LENGTH, len(self.feature_columns))
 
-            # Calcular régimen de volatilidad
+            # Realizar predicción directamente
+            predicted_volatility = float(self.model.predict(seq_input, verbose=0)[0][0])
+
+            # Determinar régimen de volatilidad
             if predicted_volatility < 0.005:
                 vol_regime = "calm"
             elif predicted_volatility < 0.015:
@@ -128,22 +176,21 @@ class MLService:
             }
 
         except Exception as e:
-            print(f"❌ Error durante la predicción: {e}")
             return {"error": f"Error en la predicción: {str(e)}"}
 
-
+    # --------------------- Info del modelo ---------------------
     def get_model_info(self) -> dict:
-        """
-        Proporciona metadatos del modelo cargado.
-        """
         info = {
             "model_loaded": self.model_loaded,
             "model_name": self.model_name,
             "model_version": self.model_version,
             "load_time": self.load_time,
-            "metrics": self.metrics
+            "metrics": self.metrics,
+            "sequence_length": self.SEQUENCE_LENGTH,
+            "feature_columns": self.feature_columns
         }
         return info
 
-# Crea una instancia global del servicio, pero el modelo NO se carga de inmediato.
+# Instancia global
 ml_service = MLService()
+
